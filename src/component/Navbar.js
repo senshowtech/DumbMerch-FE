@@ -1,10 +1,11 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../assets/css/home.css";
 const Navbars = () => {
   return (
     <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand as={Link} to="/">
           <img
             src={require("../assets/img/logo.png")}
             className="img-fluid"
@@ -17,13 +18,13 @@ const Navbars = () => {
           className="justify-content-end"
         >
           <Nav>
-            <Nav.Link href="/" style={{ color: "white" }}>
+            <Nav.Link as={Link} to="/" style={{ color: "white" }}>
               Complain
             </Nav.Link>
-            <Nav.Link href="/" style={{ color: "white" }}>
+            <Nav.Link as={Link} to="/profile" style={{ color: "white" }}>
               Profile
             </Nav.Link>
-            <Nav.Link href="/" style={{ color: "white" }}>
+            <Nav.Link as={Link} to="/" style={{ color: "white" }}>
               Logout
             </Nav.Link>
           </Nav>

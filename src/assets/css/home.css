@@ -1,3 +1,7 @@
+a.nav-link:hover {
+    color: #F74D4D !important;
+}
+
 .judul-produk {
     color: #F74D4D;
     margin-top: 14px;
