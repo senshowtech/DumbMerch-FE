@@ -1,7 +1,7 @@
 import "../assets/css/login.css";
 import { Form, Button } from "react-bootstrap";
 
-const Formregister = () => {
+const FormLogin = () => {
   return (
     <div className="container">
       <div className="row">
@@ -82,17 +82,7 @@ const Formregister = () => {
           <div className="box-kanan">
             <div className="d-flex align-items-center login-box">
               <Form>
-                <h3 className="judul-login-form mx-5">Register</h3>
-                <div className="mx-5">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control
-                      type="text"
-                      placeholder="Name"
-                      className="form-background"
-                    />
-                  </Form.Group>
-                </div>
-
+                <h3 className="judul-login-form mx-5">Login</h3>
                 <div className="mx-5">
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control
@@ -127,4 +117,4 @@ const Formregister = () => {
   );
 };
 
-export default Formregister;
+export default FormLogin;

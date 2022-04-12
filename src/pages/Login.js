@@ -1,8 +1,8 @@
-import Formlogin from "../component/Formlogin";
+import FormLogin from "../component/FormLogin";
 const Login = () => {
   return (
     <div>
-      <Formlogin />
+      <FormLogin />
     </div>
   );
 };

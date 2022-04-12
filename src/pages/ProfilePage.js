@@ -1,10 +1,10 @@
 import Navbars from "../component/Navbar";
-import Profilecomponent from "../component/Profilecomponent";
+import ProfileComponent from "../component/ProfileComponent";
 const ProfilePage = () => {
   return (
     <div>
       <Navbars />
-      <Profilecomponent />
+      <ProfileComponent />
     </div>
   );
 };

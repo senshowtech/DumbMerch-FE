@@ -1,6 +1,6 @@
 import "../assets/css/profile.css";
 
-const Profilecomponent = () => {
+const ProfileComponent = () => {
   return (
     <div className="container-fluid">
       <div className="row">
@@ -47,6 +47,7 @@ const Profilecomponent = () => {
                 </p>
               </div>
             </div>
+
             <div className="col-4">
               <svg
                 width="70"
@@ -88,4 +89,4 @@ const Profilecomponent = () => {
   );
 };
 
-export default Profilecomponent;
+export default ProfileComponent;

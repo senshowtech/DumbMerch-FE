@@ -13,6 +13,12 @@ a.nav-link:hover {
     margin-bottom: 15px !important;
 }
 
+.img-home {
+    width: 100% !important;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .paragrapgh-produk {
     color: white;
     margin-left: 16px;
@@ -20,8 +26,8 @@ a.nav-link:hover {
 
 .box-product {
     background-color: #212121;
-    height: 450px;
-    margin-right: 10px;
+    height: 470px;
+    margin-bottom: 20px;
     border-radius: 5px;
-    width: 241px;
+    width: 270px;
 }

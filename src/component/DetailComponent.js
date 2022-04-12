@@ -1,6 +1,6 @@
 import "../assets/css/detail.css";
 
-const Detailcomponent = () => {
+const DetailComponent = () => {
   return (
     <div className="container">
       <div className="row">
@@ -41,4 +41,4 @@ const Detailcomponent = () => {
     </div>
   );
 };
-export default Detailcomponent;
+export default DetailComponent;

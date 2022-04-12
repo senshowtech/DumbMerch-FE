@@ -1,10 +1,10 @@
-import Detailcomponent from "../component/Detailcomponent";
+import DetailComponent from "../component/DetailComponent";
 import Navbars from "../component/Navbar";
 const DetailPage = () => {
   return (
     <div>
       <Navbars />
-      <Detailcomponent />
+      <DetailComponent />
     </div>
   );
 };

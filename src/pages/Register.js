@@ -1,8 +1,8 @@
-import Formregister from "../component/Formregister";
+import FormRegister from "../component/FormRegister";
 const Register = () => {
   return (
     <div>
-      <Formregister />
+      <FormRegister />
     </div>
   );
 };
