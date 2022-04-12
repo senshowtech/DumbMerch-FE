@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Homepage = () => {
   return (
     <div className="container">
@@ -10,9 +12,9 @@ const Homepage = () => {
               className="img-fluid"
               alt="..."
             />
-            <a className="judul-produk" href="/detail-page">
+            <Link to="/detail-page" className="judul-produk">
               Mouse
-            </a>
+            </Link>
             <p className="paragrapgh-produk">Rp. 50.000</p>
             <p className="paragrapgh-produk">Stock 600</p>
           </div>
@@ -24,9 +26,9 @@ const Homepage = () => {
               className="img-fluid"
               alt="..."
             />
-            <a className="judul-produk" href="/detail-page">
+            <Link to="/detail-page" className="judul-produk">
               Keyboard
-            </a>
+            </Link>
             <p className="paragrapgh-produk">Rp. 50.000</p>
             <p className="paragrapgh-produk">Stock 600</p>
           </div>
