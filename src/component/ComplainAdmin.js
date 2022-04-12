@@ -1,5 +1,4 @@
 const ComplainAdmin = () => {
-  let isLoading = "cek";
   return (
     <div>
       <h1>Cek</h1>

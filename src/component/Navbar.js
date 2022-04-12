@@ -6,12 +6,12 @@ const Navbars = () => {
     <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Container>
         {/* {(() => {
-        if (isLoading === "cek") {
-          return <h1>True</h1>;
-        } else {
-          return <h1>False</h1>;
-        }
-      })()} */}
+          if (isLoading === "cek") {
+            return <h1>True</h1>;
+          } else {
+            return <h1>False</h1>;
+          }
+        })()} */}
         <Navbar.Brand as={Link} to="/">
           <img
             src={require("../assets/img/logo.png")}
