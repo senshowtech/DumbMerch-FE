@@ -1,0 +1,23 @@
+.judul-produk {
+    color: #F74D4D;
+    margin-top: 14px;
+    margin-left: 16px;
+    text-decoration: none;
+}
+
+.img-fluid {
+    margin-bottom: 15px !important;
+}
+
+.paragrapgh-produk {
+    color: white;
+    margin-left: 16px;
+}
+
+.box-product {
+    background-color: #212121;
+    height: 450px;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 241px;
+}

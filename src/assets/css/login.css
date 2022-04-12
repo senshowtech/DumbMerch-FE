@@ -1,0 +1,127 @@
+body {
+    background-color: black !important;
+}
+
+@media (min-width: 376px) and (max-width: 991px) {
+
+    .box-kiri {
+        margin-top: 140px;
+    }
+
+    .box-kanan {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .judul-login {
+        color: #FFFFFF;
+        text-align: center;
+    }
+
+    .judul-login-form {
+        color: #FFFFFF;
+        border-radius: 10px;
+    }
+
+    .icon-text {
+        text-align: center !important;
+    }
+
+    .paragrapgh-login {
+        color: #6A6A6A;
+        text-align: center;
+    }
+
+    .login-box {
+        height: 366px;
+        width: 416px;
+        background-color: #181818;
+    }
+
+    .form-background {
+        background-color: #181818 !important;
+    }
+
+    .text-login {
+        text-decoration: none;
+    }
+
+    .login-buttons {
+        width: 335px !important;
+        background-color: #F74D4D !important;
+        border: 1px solid #F74D4D !important;
+        color: white !important
+    }
+
+    .login-buttons-samping {
+        width: 105px !important;
+        background-color: #F74D4D !important;
+        color: white !important;
+    }
+
+    .register-buttons-samping {
+        margin-top: 6px !important;
+        color: white;
+    }
+
+    .button-grup {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1600px) {
+    .box-kiri {
+        margin-top: 140px;
+    }
+
+    .box-kanan {
+        margin-top: 197px;
+    }
+
+    .judul-login {
+        color: #FFFFFF;
+    }
+
+    .judul-login-form {
+        color: #FFFFFF;
+        border-radius: 10px;
+    }
+
+    .paragrapgh-login {
+        color: #6A6A6A;
+    }
+
+    .login-box {
+        height: 366px;
+        width: 416px;
+        background-color: #181818;
+    }
+
+    .form-background {
+        background-color: #181818 !important;
+    }
+
+    .text-login {
+        text-decoration: none;
+    }
+
+    .login-buttons {
+        width: 335px !important;
+        background-color: #F74D4D !important;
+        border: 1px solid #F74D4D !important;
+        color: white !important
+    }
+
+    .login-buttons-samping {
+        width: 105px !important;
+        background-color: #F74D4D !important;
+        color: white !important;
+    }
+
+    .register-buttons-samping {
+        margin-top: 6px !important;
+        color: white;
+    }
+}

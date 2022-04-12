@@ -1,0 +1,35 @@
+.profile-kiri {
+    display: flex;
+}
+
+.judul-profile {
+    color: #F74D4D;
+}
+
+.paragrapgh-produk-profile {
+    color: white;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+.judul-produk-profile {
+    color: #F74D4D;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+
+.paragrapgh-profile {
+    color: white;
+}
+
+.box-profile {
+    background-color: #303030;
+    height: 200px;
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+.img-samping {
+    margin-left: 28px;
+}
