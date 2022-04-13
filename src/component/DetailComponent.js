@@ -1,4 +1,5 @@
 import "../assets/css/detail.css";
+import { Link } from "react-router-dom";
 
 const DetailComponent = () => {
   return (
@@ -33,9 +34,9 @@ const DetailComponent = () => {
           <div className="d-flex justify-content-end">
             <h3 className="judul-produk">Rp.50.000</h3>
           </div>
-          <a className="btn button-detail" href="/" role="button">
+          <Link to="/profile" className="btn button-detail">
             Buy
-          </a>
+          </Link>
         </div>
       </div>
     </div>
