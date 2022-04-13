@@ -1,7 +1,8 @@
-import "../assets/css/complainadmin.css";
+import "../assets/css/complain.css";
 import { Form } from "react-bootstrap";
 import CardHeadComplain from "./CardHeadComplain";
-import CardBottomComplain from "./CardBottomComplain";
+import CardBottomAtas from "./CardBottomAtas";
+import CardBottomBawah from "./CardBottomBawah";
 
 const ComplainAdmin = () => {
   return (
@@ -12,17 +13,22 @@ const ComplainAdmin = () => {
         </div>
 
         <div className="col-8">
-          <CardBottomComplain />
-          <div className="mx-5 my-5">
-            <Form>
-              <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Control
-                  type="text"
-                  placeholder="Send Message"
-                  className="form-complain"
-                />
-              </Form.Group>
-            </Form>
+          <div className="d-flex align-items-end complain-admin-kanan">
+            <div className="d-flex flex-column" style={{ width: "100%" }}>
+              <CardBottomAtas />
+              <CardBottomBawah />
+              <div className="mx-5">
+                <Form>
+                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Control
+                      type="text"
+                      placeholder="Send Message"
+                      className="form-complain"
+                    />
+                  </Form.Group>
+                </Form>
+              </div>
+            </div>
           </div>
         </div>
       </div>

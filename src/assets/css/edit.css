@@ -1,0 +1,20 @@
+.form-edit {
+    width: 500px;
+}
+
+.box-edit {
+    width: 500px;
+    height: 100vh;
+}
+
+.button-edit-center {
+    display: flex;
+    justify-content: center;
+}
+
+.button-edit {
+    width: 100% !important;
+    background-color: #56C05A !important;
+    border: 1px solid #56C05A !important;
+    color: white !important
+}

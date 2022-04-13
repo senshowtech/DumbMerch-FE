@@ -1,10 +1,10 @@
 .complain-admin-kiri {
-    height: 100vh;
-    border-right: 1px solid rgba(106, 106, 106, 0.3);
+    display: block;
 }
 
 .complain-admin-kanan {
     height: 80vh;
+    border-left: 1px solid rgba(106, 106, 106, 0.3);
 }
 
 .box-chat-atas {
