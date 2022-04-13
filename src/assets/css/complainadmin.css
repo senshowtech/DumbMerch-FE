@@ -32,6 +32,11 @@
 }
 
 .paragrapgh-complain {
+    color: #ABABAB;
+    font-size: 14px;
+}
+
+.judul-complain {
     color: white;
     font-size: 16px;
 }
