@@ -1,0 +1,37 @@
+.complain-admin-kiri {
+    height: 100vh;
+    border-right: 1px solid rgba(106, 106, 106, 0.3);
+}
+
+.complain-admin-kanan {
+    height: 80vh;
+}
+
+.box-chat-atas {
+    padding-top: 15px;
+    width: 300px;
+    height: 60px;
+    background-color: #262626;
+    border-radius: 5px;
+}
+
+.box-chat-bawah {
+    padding-top: 15px;
+    width: 300px;
+    height: 60px;
+    background-color: #262626;
+    border-radius: 5px;
+}
+
+.form-complain {
+    margin-top: 80px;
+    color: white !important;
+    background-color: #181818 !important;
+    height: 50px;
+    border-color: #181818 !important;
+}
+
+.paragrapgh-complain {
+    color: white;
+    font-size: 16px;
+}
