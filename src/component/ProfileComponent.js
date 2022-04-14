@@ -4,7 +4,7 @@ const ProfileComponent = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12 col-lg">
+        <div className="col-12 col-lg-7">
           <h5 className="judul-produk">My Profile</h5>
           <div className="profile-kiri">
             <img
@@ -29,7 +29,7 @@ const ProfileComponent = () => {
             </div>
           </div>
         </div>
-        <div className="col-12 col-lg">
+        <div className="col-12 col-lg-5">
           <h5 className="judul-produk">My Transaction</h5>
           <div className="box-profile d-flex align-items-center">
             <div className="col-8 d-flex">

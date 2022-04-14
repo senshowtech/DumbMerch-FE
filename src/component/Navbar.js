@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../assets/css/home.css";
 
 const Navbars = () => {
-  let isAdmin = true;
+  let isAdmin = false;
   let url = window.location.href;
   let host = window.location.host;
   let final_url = url.replace(`http://${host}`, "");

@@ -20,14 +20,13 @@ const Product = () => {
         <div className="d-flex justify-content-between">
           <h5 className="judul-login">List Product</h5>
           <Link
-            to="/add-product"
+            to="/add-category"
             className="btn btn-primary"
             style={{ width: "100px" }}
           >
             Add
           </Link>
         </div>
-
         <Table
           striped
           bordered
@@ -74,7 +73,6 @@ const Product = () => {
             </tr>
           </tbody>
         </Table>
-
         <Modal show={show} onHide={handleClose}>
           <Modal.Body>
             <h3>Delete Data</h3>
