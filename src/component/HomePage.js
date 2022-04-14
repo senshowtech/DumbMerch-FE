@@ -1,6 +1,7 @@
 import "../assets/css/home.css";
 import CardHome from "./CardHome";
 import React from "react";
+import { Form } from "react-bootstrap";
 
 const HomePage = () => {
   const [values, setValues] = React.useState("");
@@ -15,7 +16,7 @@ const HomePage = () => {
     {
       id: 2,
       nama: "Mouse",
-      harga: 50000,
+      harga: 70000,
       stok: 100,
       gambar: require("../assets/img/mouse.png"),
     },
@@ -23,11 +24,16 @@ const HomePage = () => {
   let data_search = dataProduk.filter((value) => {
     return value.nama.toLocaleLowerCase() === values;
   });
-  console.log(data_search);
   return (
     <div className="container">
       <h5 className="judul-produk">Product</h5>
-      <input values={values} onChange={(e) => setValues(e.target.value)} />
+      <Form.Control
+        values={values}
+        onChange={(e) => setValues(e.target.value)}
+        type="text"
+        placeholder="Search By Nama Produk"
+        className="form-search"
+      />
       <div className="row">
         {data_search.length === 0
           ? dataProduk.map((value, index) => {

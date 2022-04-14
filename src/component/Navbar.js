@@ -4,6 +4,9 @@ import "../assets/css/home.css";
 
 const Navbars = () => {
   let isAdmin = true;
+  let url = window.location.href;
+  let host = window.location.host;
+  let final_url = url.replace(`http://${host}`, "");
   return (
     <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Container>
@@ -24,29 +27,65 @@ const Navbars = () => {
               <Nav.Link
                 as={Link}
                 to="/complain-admin"
-                style={{ color: "white" }}
+                className={
+                  final_url === "/complain-admin"
+                    ? "nav-active-color"
+                    : "nav-inactive-color"
+                }
               >
                 Complain
               </Nav.Link>
-              <Nav.Link as={Link} to="/category" style={{ color: "white" }}>
+              <Nav.Link
+                as={Link}
+                to="/category"
+                className={
+                  final_url === "/category"
+                    ? "nav-active-color"
+                    : "nav-inactive-color"
+                }
+              >
                 Category
               </Nav.Link>
-              <Nav.Link as={Link} to="/product" style={{ color: "white" }}>
+              <Nav.Link
+                as={Link}
+                to="/product"
+                className={
+                  final_url === "/product"
+                    ? "nav-active-color"
+                    : "nav-inactive-color"
+                }
+              >
                 Product
               </Nav.Link>
-              <Nav.Link as={Link} to="/" style={{ color: "white" }}>
+              <Nav.Link as={Link} to="/" className="nav-inactive-color">
                 Logout
               </Nav.Link>
             </Nav>
           ) : (
             <Nav>
-              <Nav.Link as={Link} to="/complain" style={{ color: "white" }}>
+              <Nav.Link
+                as={Link}
+                to="/complain"
+                className={
+                  final_url === "/complain"
+                    ? "nav-active-color"
+                    : "nav-inactive-color"
+                }
+              >
                 Complain
               </Nav.Link>
-              <Nav.Link as={Link} to="/profile" style={{ color: "white" }}>
+              <Nav.Link
+                as={Link}
+                to="/profile"
+                className={
+                  final_url === "/profile"
+                    ? "nav-active-color"
+                    : "nav-inactive-color"
+                }
+              >
                 Profile
               </Nav.Link>
-              <Nav.Link as={Link} to="/" style={{ color: "white" }}>
+              <Nav.Link as={Link} to="/" className="nav-inactive-color">
                 Logout
               </Nav.Link>
             </Nav>

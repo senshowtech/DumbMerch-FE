@@ -11,5 +11,12 @@ a.nav-link:hover {
 }
 
 .nav-inactive-color {
-    color: white
+    color: white !important
+}
+
+.form-search {
+    background-color: #181818 !important;
+    color: white !important;
+    width: 300px;
+    margin-left: 16px;
 }
