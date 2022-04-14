@@ -12,6 +12,8 @@ import CategoryPage from "./pages/CategoryPage";
 import ProductPage from "./pages/ProductPage";
 import EditProductPage from "./pages/EditProductPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
+import AddProductPage from "./pages/AddProductPage";
+import AddCategoryPage from "./pages/AddCategoryPage";
 
 const App = () => {
   return (
@@ -30,6 +32,8 @@ const App = () => {
         {/* Admin */}
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/product" element={<ProductPage />} />
+        <Route path="/add-product" element={<AddProductPage />} />
+        <Route path="/add-category" element={<AddCategoryPage />} />
         <Route path="/edit-product" element={<EditProductPage />} />
         <Route path="/edit-category" element={<EditCategoryPage />} />
         {/* Admin */}

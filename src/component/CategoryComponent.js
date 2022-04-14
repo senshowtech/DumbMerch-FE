@@ -1,16 +1,33 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
+
 import "../assets/css/category.css";
 const Category = () => {
+  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const EditCategory = () => {
+    navigate("/edit-category");
+  };
+
   return (
     <div className="d-flex justify-content-center">
       <div className="box-table">
-        <h5 className="judul-login">List Category</h5>
+        <div className="d-flex justify-content-between">
+          <h5 className="judul-login">List Category</h5>
+          <Link
+            to="/add-category"
+            className="btn btn-primary"
+            style={{ width: "100px" }}
+          >
+            Add
+          </Link>
+        </div>
         <Table
           striped
           bordered
@@ -31,7 +48,11 @@ const Category = () => {
               <td className="column-1">1</td>
               <td className="column-2">Mouse</td>
               <td>
-                <Button variant="success" className="button-category">
+                <Button
+                  variant="success"
+                  onClick={EditCategory}
+                  className="button-category"
+                >
                   Edit
                 </Button>
                 <Button

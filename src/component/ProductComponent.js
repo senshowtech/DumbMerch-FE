@@ -1,17 +1,33 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/category.css";
 
 const Product = () => {
+  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const EditProduct = () => {
+    navigate("/edit-product");
+  };
 
   return (
     <div className="d-flex justify-content-center">
       <div className="box-table">
-        <h5 className="judul-login">List Product</h5>
+        <div className="d-flex justify-content-between">
+          <h5 className="judul-login">List Product</h5>
+          <Link
+            to="/add-product"
+            className="btn btn-primary"
+            style={{ width: "100px" }}
+          >
+            Add
+          </Link>
+        </div>
+
         <Table
           striped
           bordered
@@ -40,7 +56,11 @@ const Product = () => {
               <td>Mouse</td>
               <td>Mouse</td>
               <td>
-                <Button variant="success" className="button-category">
+                <Button
+                  onClick={EditProduct}
+                  variant="success"
+                  className="button-category"
+                >
                   Edit
                 </Button>
                 <Button
@@ -54,6 +74,7 @@ const Product = () => {
             </tr>
           </tbody>
         </Table>
+
         <Modal show={show} onHide={handleClose}>
           <Modal.Body>
             <h3>Delete Data</h3>
