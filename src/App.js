@@ -14,29 +14,34 @@ import EditProductPage from "./pages/EditProductPage";
 import EditCategoryPage from "./pages/EditCategoryPage";
 import AddProductPage from "./pages/AddProductPage";
 import AddCategoryPage from "./pages/AddCategoryPage";
+import PrivateRoute from "./component/PrivateRoute";
+import NotFound from "./component/404NotFound";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* User */}
-        <Route path="/" element={<Home />} />
+        <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/detail-page" element={<DetailPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/complain-admin" element={<ComplainAdminPage />} />
-        <Route path="/complain" element={<ComplainUserPage />} />
-        {/* User */}
+        <Route path="/" element={<PrivateRoute />}>
+          {/* User */}
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/detail-page" element={<DetailPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/complain-admin" element={<ComplainAdminPage />} />
+          <Route path="/complain" element={<ComplainUserPage />} />
+          {/* User */}
 
-        {/* Admin */}
-        <Route path="/category" element={<CategoryPage />} />
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/add-product" element={<AddProductPage />} />
-        <Route path="/add-category" element={<AddCategoryPage />} />
-        <Route path="/edit-product" element={<EditProductPage />} />
-        <Route path="/edit-category" element={<EditCategoryPage />} />
-        {/* Admin */}
+          {/* Admin */}
+          <Route path="/category" element={<CategoryPage />} />
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/add-product" element={<AddProductPage />} />
+          <Route path="/add-category" element={<AddCategoryPage />} />
+          <Route path="/edit-product" element={<EditProductPage />} />
+          <Route path="/edit-category" element={<EditCategoryPage />} />
+          {/* Admin */}
+        </Route>
       </Routes>
     </BrowserRouter>
   );
