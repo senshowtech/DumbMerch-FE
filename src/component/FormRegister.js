@@ -1,5 +1,6 @@
 import "../assets/css/login.css";
 import { Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const FormRegister = () => {
   return (
@@ -65,15 +66,15 @@ const FormRegister = () => {
             </p>
 
             <div className="d-flex mt-5 button-grup">
-              <button type="submit" className="btn login-buttons-samping">
+              <Link to="/login" className="btn login-buttons-samping">
                 Login
-              </button>
-              <a
-                href="/register"
+              </Link>
+              <Link
+                to="/register"
                 className="mx-5 text-login register-buttons-samping"
               >
                 Register
-              </a>
+              </Link>
             </div>
           </div>
         </div>

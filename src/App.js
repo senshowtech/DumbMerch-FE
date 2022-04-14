@@ -23,10 +23,10 @@ const App = () => {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<PrivateRoute />}>
           {/* User */}
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
           <Route path="/detail-page" element={<DetailPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/complain-admin" element={<ComplainAdminPage />} />

@@ -33,11 +33,13 @@ const ProfileComponent = () => {
           <h5 className="judul-produk">My Transaction</h5>
           <div className="box-profile d-flex align-items-center">
             <div className="col-8 d-flex">
-              <img
-                src={require("../assets/img/mousesamping.png")}
-                className="img-fluid img-samping"
-                alt="..."
-              />
+              <div style={{ width: "80px", height: "120px" }}>
+                <img
+                  src={require("../assets/img/mousesamping.png")}
+                  className="img-fluid img-samping"
+                  alt="..."
+                />
+              </div>
               <div className="d-flex flex-column">
                 <h6 className="judul-produk-profile">Mouse</h6>
                 <p className="judul-produk-profile">Saturday, 14 Juli 2021</p>

@@ -20,6 +20,20 @@ const HomePage = () => {
       stok: 100,
       gambar: require("../assets/img/mouse.png"),
     },
+    {
+      id: 3,
+      nama: "Keyboard",
+      harga: 50000,
+      stok: 100,
+      gambar: require("../assets/img/keyboard.png"),
+    },
+    {
+      id: 4,
+      nama: "Mouse",
+      harga: 70000,
+      stok: 100,
+      gambar: require("../assets/img/mouse.png"),
+    },
   ];
   let data_search = dataProduk.filter((value) => {
     return value.nama.toLocaleLowerCase() === values;

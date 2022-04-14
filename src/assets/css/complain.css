@@ -48,7 +48,8 @@
     }
 
     .complain-admin-kanan {
-        height: 80vh;
+        /* height: 80vh; */
+        height: 100%;
         border-left: 1px solid rgba(106, 106, 106, 0.3);
     }
 

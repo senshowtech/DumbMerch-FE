@@ -8,13 +8,17 @@ const ComplainAdmin = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12 col-lg-4 complain-admin-kiri">
+        <div className="col-12 col-lg-3 complain-admin-kiri">
           <CardHeadComplain />
         </div>
 
-        <div className="col-12 col-lg-8">
+        <div className="col-12 col-lg-9">
           <div className="d-flex align-items-end complain-admin-kanan">
             <div className="d-flex flex-column" style={{ width: "100%" }}>
+              <CardBottomAtas />
+              <CardBottomBawah />
+              <CardBottomAtas />
+              <CardBottomBawah />
               <CardBottomAtas />
               <CardBottomBawah />
               <div className="mx-5">
