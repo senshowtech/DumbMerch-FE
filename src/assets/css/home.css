@@ -33,3 +33,7 @@
     color: white !important;
     width: 300px;
 }
+
+.card {
+    border-radius: 10px;
+}

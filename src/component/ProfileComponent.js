@@ -4,32 +4,31 @@ const ProfileComponent = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12 col-lg-7">
-          <h5 className="judul-produk">My Profile</h5>
-          <div className="profile-kiri">
+        <div class="col-12 col-lg">
+          <div className="d-flex justify-content-center justify-content-lg-end">
             <img
               src={require("../assets/img/person.png")}
               className="img-fluid"
               alt="..."
             />
-            <div className="d-flex flex-column mx-3">
-              <h6 className="judul-profile">Name</h6>
-              <p className="paragrapgh-profile">Sena</p>
-              <h6 className="judul-profile">Email</h6>
-              <p className="paragrapgh-profile">hargiantofebrisena@gmail.com</p>
-              <h6 className="judul-profile">Phone</h6>
-              <p className="paragrapgh-profile">08212</p>
-              <h6 className="judul-profile">Gender</h6>
-              <p className="paragrapgh-profile">Male</p>
-              <h6 className="judul-profile">Address</h6>
-              <p className="paragrapgh-profile">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum
-                porro, sequi nemo voluptates, ab quo inventore eaque corrupti
-              </p>
-            </div>
           </div>
         </div>
-        <div className="col-12 col-lg-5">
+        <div class="col-12 col-lg">
+          <h6 className="judul-profile">Name</h6>
+          <p className="paragrapgh-profile">Sena</p>
+          <h6 className="judul-profile">Email</h6>
+          <p className="paragrapgh-profile">hargiantofebrisena@gmail.com</p>
+          <h6 className="judul-profile">Phone</h6>
+          <p className="paragrapgh-profile">08212</p>
+          <h6 className="judul-profile">Gender</h6>
+          <p className="paragrapgh-profile">Male</p>
+          <h6 className="judul-profile">Address</h6>
+          <p className="paragrapgh-profile">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum
+            porro, sequi nemo voluptates, ab quo inventore eaque corrupti
+          </p>
+        </div>
+        <div class="col-12 col-lg">
           <h5 className="judul-produk">My Transaction</h5>
           <div className="box-profile d-flex align-items-center">
             <div className="col-8 d-flex">
