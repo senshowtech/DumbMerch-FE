@@ -16,7 +16,7 @@ const ComplainUserComponent = () => {
         <div className="col-12 col-lg-9">
           <div className="d-flex align-items-end complain-admin-kanan">
             <div className="d-flex flex-column" style={{ width: "100%" }}>
-              <div class="overflow-auto">
+              <div className="overflow-auto">
                 <CardBottomAtas />
                 <CardBottomBawah />
                 <CardBottomAtas />

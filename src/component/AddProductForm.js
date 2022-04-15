@@ -3,7 +3,7 @@ import "../assets/css/edit.css";
 const AddProductForm = () => {
   return (
     <div className="container-fluid">
-      <div class="row">
+      <div className="row">
         <div className="col-1"></div>
         <div className="col-10">
           <Form>

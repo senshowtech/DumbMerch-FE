@@ -1,0 +1,58 @@
+export let dataProduk = [
+  {
+    id: 1,
+    nama: "Keyboard",
+    harga: 50000,
+    stok: 100,
+    gambar: require("../assets/img/keyboard.png"),
+  },
+  {
+    id: 2,
+    nama: "Mouse",
+    harga: 70000,
+    stok: 100,
+    gambar: require("../assets/img/mouse.png"),
+  },
+  {
+    id: 3,
+    nama: "Keyboard",
+    harga: 50000,
+    stok: 100,
+    gambar: require("../assets/img/keyboard.png"),
+  },
+  {
+    id: 4,
+    nama: "Mouse",
+    harga: 70000,
+    stok: 100,
+    gambar: require("../assets/img/mouse.png"),
+  },
+  {
+    id: 5,
+    nama: "Keyboard",
+    harga: 50000,
+    stok: 100,
+    gambar: require("../assets/img/keyboard.png"),
+  },
+  {
+    id: 6,
+    nama: "Mouse",
+    harga: 70000,
+    stok: 100,
+    gambar: require("../assets/img/mouse.png"),
+  },
+  {
+    id: 7,
+    nama: "Keyboard",
+    harga: 50000,
+    stok: 100,
+    gambar: require("../assets/img/keyboard.png"),
+  },
+  {
+    id: 8,
+    nama: "Mouse",
+    harga: 70000,
+    stok: 100,
+    gambar: require("../assets/img/mouse.png"),
+  },
+];
