@@ -10,17 +10,17 @@ const ComplainAdmin = () => {
       <div className="row">
         <div className="col-12 col-lg-3 complain-admin-kiri">
           <CardHeadComplain />
+          <CardHeadComplain />
         </div>
 
         <div className="col-12 col-lg-9">
-          <div className="d-flex align-items-end complain-admin-kanan">
-            <div className="d-flex flex-column" style={{ width: "100%" }}>
+          <div className="complain-admin-kanan">
+            <div className="overflow-auto">
               <CardBottomAtas />
               <CardBottomBawah />
               <CardBottomAtas />
               <CardBottomBawah />
               <CardBottomAtas />
-              <CardBottomBawah />
               <div className="mx-5">
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicPassword">

@@ -15,7 +15,7 @@ const DetailComponent = () => {
             </div>
           </div>
         </div>
-        <div className="col-12 col-lg">
+        <div className="col-12 col-lg mb-5">
           <h1 className="judul-produk">{data_detail.nama}</h1>
           <p className="paragrapgh-produk">{`Stock: ${data_detail.stok}`}</p>
           <p className="paragrapgh-produk">{data_detail.deskripsi}</p>

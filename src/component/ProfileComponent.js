@@ -4,7 +4,7 @@ const ProfileComponent = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div class="col-12 col-lg">
+        <div class="col-12 col-lg-3">
           <div className="d-flex justify-content-center justify-content-lg-end">
             <img
               src={require("../assets/img/person.png")}
@@ -13,7 +13,7 @@ const ProfileComponent = () => {
             />
           </div>
         </div>
-        <div class="col-12 col-lg">
+        <div class="col-12 col-lg-4">
           <h6 className="judul-profile">Name</h6>
           <p className="paragrapgh-profile">Sena</p>
           <h6 className="judul-profile">Email</h6>
@@ -28,28 +28,25 @@ const ProfileComponent = () => {
             porro, sequi nemo voluptates, ab quo inventore eaque corrupti
           </p>
         </div>
-        <div class="col-12 col-lg">
+        <div class="col-12 col-lg-5">
           <h5 className="judul-produk">My Transaction</h5>
           <div className="box-profile d-flex align-items-center">
-            <div className="col-8 d-flex">
-              <div style={{ width: "80px", height: "120px" }}>
-                <img
-                  src={require("../assets/img/mousesamping.png")}
-                  className="img-fluid img-samping"
-                  alt="..."
-                />
-              </div>
-              <div className="d-flex flex-column">
-                <h6 className="judul-produk-profile">Mouse</h6>
-                <p className="judul-produk-profile">Saturday, 14 Juli 2021</p>
-                <p className="paragrapgh-produk-profile">Price: Rp.50.000</p>
-                <p className="paragrapgh-produk-profile fw-bold">
-                  Sub Total: 500.000
-                </p>
-              </div>
+            <div className="img-samping">
+              <img
+                src={require("../assets/img/mousesamping.png")}
+                className="img-fluid"
+                alt="..."
+              />
             </div>
-
-            <div className="col-4">
+            <div className="d-flex flex-column">
+              <h6 className="judul-samping-profile">Mouse</h6>
+              <p className="judul-samping-profile">Saturday, 14 Juli 2021</p>
+              <p className="paragrapgh-samping-profile">Price: Rp.50.000</p>
+              <p className="paragrapgh-samping-profile fw-bold">
+                Sub Total: 500.000
+              </p>
+            </div>
+            <div className="icon-samping">
               <svg
                 width="70"
                 height="70"

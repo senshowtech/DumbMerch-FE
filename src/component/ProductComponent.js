@@ -20,7 +20,7 @@ const Product = () => {
         <div className="d-flex justify-content-between">
           <h5 className="judul-login">List Product</h5>
           <Link
-            to="/add-category"
+            to="/add-product"
             className="btn btn-primary"
             style={{ width: "100px" }}
           >

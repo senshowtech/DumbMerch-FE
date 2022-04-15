@@ -3,20 +3,30 @@ import { Link } from "react-router-dom";
 import "../assets/css/home.css";
 
 const Navbars = () => {
-  let isAdmin = false;
+  let isAdmin = true;
   let url = window.location.href;
   let host = window.location.host;
   let final_url = url.replace(`http://${host}`, "");
   return (
     <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
       <Container>
-        <Navbar.Brand as={Link} to="/">
-          <img
-            src={require("../assets/img/logo.png")}
-            className="img-fluid"
-            alt="..."
-          />
-        </Navbar.Brand>
+        {isAdmin ? (
+          <Navbar.Brand as={Link} to="/product">
+            <img
+              src={require("../assets/img/logo.png")}
+              className="img-fluid"
+              alt="..."
+            />
+          </Navbar.Brand>
+        ) : (
+          <Navbar.Brand as={Link} to="/">
+            <img
+              src={require("../assets/img/logo.png")}
+              className="img-fluid"
+              alt="..."
+            />
+          </Navbar.Brand>
+        )}
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse
           id="responsive-navbar-nav"

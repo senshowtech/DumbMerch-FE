@@ -8,7 +8,7 @@ const HomePage = () => {
   const [values, setValues] = React.useState("");
 
   let data_search = dataProduk.filter((value) => {
-    return value.nama.toLocaleLowerCase().includes(values);
+    return value.nama.toLocaleLowerCase().includes(values.toLocaleLowerCase());
   });
 
   return (
