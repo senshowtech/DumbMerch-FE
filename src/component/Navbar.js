@@ -5,6 +5,7 @@ import "../assets/css/home.css";
 const Navbars = () => {
   let Getdatalogin = localStorage.getItem("datalogin");
   let isAdmin = JSON.parse(Getdatalogin).isAdmin;
+
   let url = window.location.href;
   let host = window.location.host;
   let final_url = url.replace(`http://${host}`, "");
@@ -69,7 +70,7 @@ const Navbars = () => {
               >
                 Product
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="nav-inactive-color">
+              <Nav.Link as={Link} to="/login" className="nav-inactive-color">
                 Logout
               </Nav.Link>
             </Nav>
@@ -97,7 +98,7 @@ const Navbars = () => {
               >
                 Profile
               </Nav.Link>
-              <Nav.Link as={Link} to="/" className="nav-inactive-color">
+              <Nav.Link as={Link} to="/login" className="nav-inactive-color">
                 Logout
               </Nav.Link>
             </Nav>
