@@ -1,6 +1,12 @@
 import { Form, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import "../assets/css/edit.css";
+import { dataCategory } from "../dummy/dataCategory";
+
 const EditCategory = () => {
+  const { state } = useLocation();
+  let data_detail = dataCategory[state.id];
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -11,6 +17,7 @@ const EditCategory = () => {
             <div className="mx-5">
               <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Control
+                  defaultValue={data_detail.category}
                   type="text"
                   placeholder="Edit Category"
                   className="form-background"

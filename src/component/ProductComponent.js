@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { dataProduk } from "../dummy/dataProduk";
 import "../assets/css/category.css";
 
 const Product = () => {
@@ -10,9 +11,19 @@ const Product = () => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const EditProduct = () => {
-    navigate("/edit-product");
+  const EditProduct = (id) => {
+    navigate("/edit-product", {
+      state: {
+        id: id,
+      },
+    });
   };
+
+  let formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  });
 
   return (
     <div className="d-flex justify-content-center">
@@ -47,30 +58,45 @@ const Product = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Mouse</td>
-              <td>Mouse</td>
-              <td>Mouse</td>
-              <td>Mouse</td>
-              <td>Mouse</td>
-              <td>
-                <Button
-                  onClick={EditProduct}
-                  variant="success"
-                  className="button-category"
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={handleShow}
-                  className="button-category"
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
+            {dataProduk.map((value, index) => {
+              return (
+                <tr key={value.id}>
+                  <td className="align-middle">{value.id}</td>
+                  <td className="align-middle">{value.nama}</td>
+                  <td>
+                    <div
+                      style={{ width: "80px", height: "100px", margin: "auto" }}
+                    >
+                      <img src={value.gambar} className="img-fluid" alt="..." />
+                    </div>
+                  </td>
+                  <td className="align-middle">{`${value.deskripsi.slice(
+                    0,
+                    70
+                  )}...`}</td>
+                  <td className="align-middle">
+                    {formatter.format(value.harga)}
+                  </td>
+                  <td className="align-middle">{value.stok}</td>
+                  <td className="align-middle">
+                    <Button
+                      onClick={() => EditProduct(value.id)}
+                      variant="success"
+                      className="button-category"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={handleShow}
+                      className="button-category"
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
         <Modal show={show} onHide={handleClose}>

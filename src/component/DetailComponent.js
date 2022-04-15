@@ -5,6 +5,13 @@ import { dataProduk } from "../dummy/dataProduk";
 const DetailComponent = () => {
   const { state } = useLocation();
   let data_detail = dataProduk[state.id];
+
+  let formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  });
+
   return (
     <div className="container">
       <div className="row">
@@ -20,7 +27,9 @@ const DetailComponent = () => {
           <p className="paragrapgh-produk">{`Stock: ${data_detail.stok}`}</p>
           <p className="paragrapgh-produk">{data_detail.deskripsi}</p>
           <div className="d-flex justify-content-end">
-            <h3 className="judul-produk">{`Rp.${data_detail.harga}`}</h3>
+            <h3 className="judul-produk">
+              {formatter.format(data_detail.harga)}
+            </h3>
           </div>
           <Link to="/profile" className="btn button-detail">
             Buy

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { dataCategory } from "../dummy/dataCategory";
 
 import "../assets/css/category.css";
 const Category = () => {
@@ -11,8 +12,12 @@ const Category = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const EditCategory = () => {
-    navigate("/edit-category");
+  const EditCategory = (id) => {
+    navigate("/edit-category", {
+      state: {
+        id: id,
+      },
+    });
   };
 
   return (
@@ -44,26 +49,30 @@ const Category = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="column-1">1</td>
-              <td className="column-2">Mouse</td>
-              <td>
-                <Button
-                  variant="success"
-                  onClick={EditCategory}
-                  className="button-category"
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={handleShow}
-                  className="button-category"
-                >
-                  Delete
-                </Button>
-              </td>
-            </tr>
+            {dataCategory.map((value) => {
+              return (
+                <tr key={value.id}>
+                  <td className="column-1 align-middle">{value.id}</td>
+                  <td className="column-2 align-middle">{value.category}</td>
+                  <td className="align-middle">
+                    <Button
+                      variant="success"
+                      onClick={() => EditCategory(value.id)}
+                      className="button-category"
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={handleShow}
+                      className="button-category"
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </Table>
         <Modal show={show} onHide={handleClose}>
