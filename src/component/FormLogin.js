@@ -1,8 +1,43 @@
+import React from "react";
 import "../assets/css/login.css";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FormLogin = () => {
+  const [state, setState] = React.useState({
+    isLogin: false,
+    isAdmin: false,
+  });
+
+  const navigate = useNavigate();
+
+  const HandleSubmit = (e) => {
+    e.preventDefault();
+    if (e.target.email.value === "user@gmail.com") {
+      setState({
+        isLogin: true,
+        isAdmin: false,
+      });
+    } else if (e.target.email.value === "admin@gmail.com") {
+      setState({
+        isLogin: true,
+        isAdmin: true,
+      });
+    }
+  };
+
+  React.useEffect(() => {
+    const LoginLogic = () => {
+      localStorage.setItem("datalogin", JSON.stringify(state));
+      if (state.isLogin === true && state.isAdmin === true) {
+        navigate("/product");
+      } else if (state.isLogin === true && state.isAdmin === false) {
+        navigate("/");
+      }
+    };
+    LoginLogic();
+  }, [state, navigate]);
+
   return (
     <div className="container">
       <div className="row">
@@ -82,12 +117,13 @@ const FormLogin = () => {
         <div className="col-12 col-lg">
           <div className="box-kanan">
             <div className="d-flex align-items-center login-box">
-              <Form>
+              <Form onSubmit={HandleSubmit}>
                 <h3 className="judul-login-form mx-5">Login</h3>
                 <div className="mx-5">
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control
                       type="email"
+                      name="email"
                       placeholder="Enter email"
                       className="form-background"
                     />
@@ -98,6 +134,7 @@ const FormLogin = () => {
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="password"
+                      name="password"
                       placeholder="Password"
                       className="form-background"
                     />
