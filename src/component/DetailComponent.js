@@ -1,9 +1,9 @@
 import React from "react";
+import axios from "axios";
 import "../assets/css/detail.css";
 import { Link, useLocation } from "react-router-dom";
 import { dataProduk } from "../dummy/dataProduk";
 import { Form, Button } from "react-bootstrap";
-import axios from "axios";
 
 const DetailComponent = () => {
   const { state } = useLocation();
