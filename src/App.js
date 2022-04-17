@@ -16,6 +16,7 @@ import AddProductPage from "./pages/AddProductPage";
 import AddCategoryPage from "./pages/AddCategoryPage";
 import PrivateRoute from "./component/PrivateRoute";
 import NotFound from "./component/404NotFound";
+import OngkirPage from "./pages/OngkirPage";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/ongkir" element={<OngkirPage />} />
         <Route path="/" element={<PrivateRoute />}>
           {/* User */}
           <Route path="/" element={<Home />} />

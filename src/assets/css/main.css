@@ -24,3 +24,8 @@ a.nav-link:hover {
     border: 1px solid #F74D4D !important;
     color: white !important
 }
+
+.select-pembayaran {
+    background-color: black;
+    color: white;
+}

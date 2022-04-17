@@ -1,6 +1,7 @@
 import "../assets/css/detail.css";
 import { Link, useLocation } from "react-router-dom";
 import { dataProduk } from "../dummy/dataProduk";
+import OngkirComponent from "./OngkirComponent";
 
 const DetailComponent = () => {
   const { state } = useLocation();
@@ -26,6 +27,7 @@ const DetailComponent = () => {
           <h1 className="judul-produk">{data_detail.nama}</h1>
           <p className="paragrapgh-produk">{`Stock: ${data_detail.stok}`}</p>
           <p className="paragrapgh-produk">{data_detail.deskripsi}</p>
+          <OngkirComponent />
           <div className="d-flex justify-content-end">
             <h3 className="judul-produk">
               {formatter.format(data_detail.harga)}
