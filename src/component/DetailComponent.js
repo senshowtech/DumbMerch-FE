@@ -1,9 +1,9 @@
+import React from "react";
 import "../assets/css/detail.css";
 import { Link, useLocation } from "react-router-dom";
 import { dataProduk } from "../dummy/dataProduk";
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import React from "react";
 
 const DetailComponent = () => {
   const { state } = useLocation();
@@ -13,6 +13,7 @@ const DetailComponent = () => {
   const [kotaTujuan, setkotaTujuan] = React.useState(0);
   const [layanan, setLayanan] = React.useState([]);
   const [hasilAkhir, sethasilAkhir] = React.useState(0);
+  const [stokCount, setstokCount] = React.useState(0);
 
   React.useEffect(() => {
     const getProvince = async () => {
@@ -61,6 +62,25 @@ const DetailComponent = () => {
     sethasilAkhir(hasil);
   };
 
+  const jumlahHarga = (e) => {
+    let stok = e.target.value;
+    console.log(stok);
+  };
+
+  const Tambah = () => {
+    if (stokCount < data_detail.stok) {
+      let tambah = stokCount + 1;
+      setstokCount(tambah);
+    }
+  };
+
+  const Kurang = () => {
+    if (stokCount > 0) {
+      let kurang = stokCount - 1;
+      setstokCount(kurang);
+    }
+  };
+
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
@@ -79,7 +99,28 @@ const DetailComponent = () => {
         </div>
         <div className="col-12 col-lg mb-5">
           <h1 className="judul-produk">{data_detail.nama}</h1>
-          <p className="paragrapgh-produk">{`Stock: ${data_detail.stok}`}</p>
+          <div className="d-flex justify-content-between">
+            <p className="paragrapgh-produk">{`Stock: ${
+              data_detail.stok - parseInt(stokCount)
+            }`}</p>
+            <div className="d-flex">
+              <Button className="button-kiri-count" onClick={Kurang}>
+                -
+              </Button>
+              <Form.Group>
+                <Form.Control
+                  value={stokCount}
+                  onChange={jumlahHarga}
+                  type="text"
+                  style={{ width: "59px", height: "35px", textAlign: "center" }}
+                  placeholder="Edit Category"
+                />
+              </Form.Group>
+              <Button className="button-kanan-count" onClick={Tambah}>
+                +
+              </Button>
+            </div>
+          </div>
           <p className="paragrapgh-produk">{data_detail.deskripsi}</p>
           <Form.Select
             onChange={HandleNamaKota}
@@ -131,7 +172,9 @@ const DetailComponent = () => {
           </Form.Select>
           <div className="d-flex justify-content-end">
             <h3 className="judul-produk">
-              {formatter.format(data_detail.harga + parseInt(hasilAkhir))}
+              {formatter.format(
+                data_detail.harga * stokCount + parseInt(hasilAkhir)
+              )}
             </h3>
           </div>
           <Link to="/profile" className="btn button-detail">

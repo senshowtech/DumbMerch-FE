@@ -29,3 +29,17 @@ a.nav-link:hover {
     background-color: black;
     color: white;
 }
+
+.button-kiri-count {
+    background-color: #F74D4D !important;
+    border-color: #F74D4D;
+    margin-right: 10px;
+    height: 35px;
+}
+
+.button-kanan-count {
+    background-color: #F74D4D !important;
+    border-color: #F74D4D;
+    margin-left: 10px;
+    height: 35px;
+}
