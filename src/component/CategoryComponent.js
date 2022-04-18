@@ -49,15 +49,16 @@ const Category = () => {
             </tr>
           </thead>
           <tbody>
-            {dataCategory.map((value) => {
+            {dataCategory.map((value, index) => {
               return (
                 <tr key={value.id}>
                   <td className="column-1 align-middle">{value.id}</td>
                   <td className="column-2 align-middle">{value.category}</td>
                   <td className="align-middle">
+                    {/* ganti id jika sudah pake api */}
                     <Button
                       variant="success"
-                      onClick={() => EditCategory(value.id)}
+                      onClick={() => EditCategory(index)}
                       className="button-category"
                     >
                       Edit

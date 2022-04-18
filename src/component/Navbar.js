@@ -78,6 +78,15 @@ const Navbars = () => {
             <Nav>
               <Nav.Link
                 as={Link}
+                to="/"
+                className={
+                  final_url === "/" ? "nav-active-color" : "nav-inactive-color"
+                }
+              >
+                Home
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
                 to="/complain"
                 className={
                   final_url === "/complain"

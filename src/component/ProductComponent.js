@@ -79,8 +79,9 @@ const Product = () => {
                   </td>
                   <td className="align-middle">{value.stok}</td>
                   <td className="align-middle">
+                    {/* ganti id jika sudah pake api */}
                     <Button
-                      onClick={() => EditProduct(value.id)}
+                      onClick={() => EditProduct(index)}
                       variant="success"
                       className="button-category"
                     >

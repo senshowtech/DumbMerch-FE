@@ -13,7 +13,7 @@ const DetailComponent = () => {
   const [kotaTujuan, setkotaTujuan] = React.useState(0);
   const [layanan, setLayanan] = React.useState([]);
   const [hasilAkhir, sethasilAkhir] = React.useState(0);
-  const [stokCount, setstokCount] = React.useState(0);
+  const [stokCount, setstokCount] = React.useState(1);
 
   React.useEffect(() => {
     const getProvince = async () => {
