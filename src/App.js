@@ -1,19 +1,26 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/main.css";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import DetailPage from "./pages/DetailPage";
-import ProfilePage from "./pages/ProfilePage";
-import ComplainAdminPage from "./pages/ComplainAdminPage";
-import ComplainUserPage from "./pages/ComplainUserPage";
-import CategoryPage from "./pages/CategoryPage";
-import ProductPage from "./pages/ProductPage";
-import EditProductPage from "./pages/EditProductPage";
-import EditCategoryPage from "./pages/EditCategoryPage";
-import AddProductPage from "./pages/AddProductPage";
-import AddCategoryPage from "./pages/AddCategoryPage";
+// product
+import ProductPage from "./pages/Product/ProductPage";
+import EditProductPage from "./pages/Product/EditProductPage";
+import AddProductPage from "./pages/Product/AddProductPage";
+// category
+import CategoryPage from "./pages/Category/CategoryPage";
+import EditCategoryPage from "./pages/Category/EditCategoryPage";
+import AddCategoryPage from "./pages/Category/AddCategoryPage";
+// profile
+import ProfilePage from "./pages/Profile/ProfilePage";
+// home
+import Home from "./pages/Home/Home";
+import DetailPage from "./pages/Home/DetailPage";
+// auth
+import Login from "./pages/Auth/Login";
+import Register from "./pages/Auth/Register";
+// complain
+import ComplainAdminPage from "./pages/Complain/ComplainAdminPage";
+import ComplainUserPage from "./pages/Complain/ComplainUserPage";
+
 import PrivateRoute from "./component/PrivateRoute";
 import NotFound from "./component/404NotFound";
 import OngkirPage from "./pages/OngkirPage";
