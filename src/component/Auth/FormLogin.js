@@ -2,41 +2,50 @@ import React from "react";
 import "../../assets/css/login.css";
 import { Form, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-
+import { API } from "../../config/axios";
 const FormLogin = () => {
-  const [state, setState] = React.useState({
-    isLogin: false,
-    isAdmin: false,
-  });
-
+  const dataResponse = React.useRef({});
   const navigate = useNavigate();
 
-  const HandleSubmit = (e) => {
+  const HandleSubmit = async (e) => {
     e.preventDefault();
-    if (e.target.email.value === "user@gmail.com") {
-      setState({
-        isLogin: true,
-        isAdmin: false,
-      });
-    } else if (e.target.email.value === "admin@gmail.com") {
-      setState({
-        isLogin: true,
-        isAdmin: true,
-      });
-    }
-  };
-
-  React.useEffect(() => {
-    const LoginLogic = () => {
-      localStorage.setItem("datalogin", JSON.stringify(state));
-      if (state.isLogin === true && state.isAdmin === true) {
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      let data = {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+      const response = await API.post(`/login`, data, config);
+      if (response.status === 201) {
+        dataResponse.current = response.data.data;
+      }
+      if (dataResponse.current.user.status === "admin") {
+        localStorage.setItem(
+          "token",
+          JSON.stringify({
+            token: dataResponse.current.user.token,
+            isAdmin: true,
+          })
+        );
         navigate("/product");
-      } else if (state.isLogin === true && state.isAdmin === false) {
+      } else {
+        localStorage.setItem(
+          "token",
+          JSON.stringify({
+            token: dataResponse.current.user.token,
+            isAdmin: false,
+          })
+        );
         navigate("/");
       }
-    };
-    LoginLogic();
-  }, [state, navigate]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="container">

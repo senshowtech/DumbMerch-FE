@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../assets/css/home.css";
 
 const Navbars = () => {
-  let Getdatalogin = localStorage.getItem("datalogin");
+  let Getdatalogin = localStorage.getItem("token");
   let isAdmin = JSON.parse(Getdatalogin).isAdmin;
 
   let url = window.location.href;

@@ -1,8 +1,30 @@
+import React from "react";
 import "../../assets/css/login.css";
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { API } from "../../config/axios";
 
 const FormRegister = () => {
+  const dataResponse = React.useRef({});
+
+  const HandleSubmit = async (e) => {
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      let data = {
+        name: e.target.name.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+      const response = await API.post(`/register`, data, config);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="container">
       <div className="row">
@@ -82,12 +104,13 @@ const FormRegister = () => {
         <div className="col-12 col-lg">
           <div className="box-kanan">
             <div className="d-flex align-items-center login-box">
-              <Form>
+              <Form onSubmit={HandleSubmit}>
                 <h3 className="judul-login-form mx-5">Register</h3>
                 <div className="mx-5">
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control
                       type="text"
+                      name="name"
                       placeholder="Name"
                       className="form-background"
                     />
@@ -98,6 +121,7 @@ const FormRegister = () => {
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control
                       type="email"
+                      name="email"
                       placeholder="Enter email"
                       className="form-background"
                     />
@@ -108,6 +132,7 @@ const FormRegister = () => {
                   <Form.Group className="mb-3" controlId="formBasicPassword">
                     <Form.Control
                       type="password"
+                      name="password"
                       placeholder="Password"
                       className="form-background"
                     />
