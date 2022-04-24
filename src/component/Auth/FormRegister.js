@@ -1,13 +1,15 @@
 import React from "react";
 import "../../assets/css/login.css";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../config/axios";
 
 const FormRegister = () => {
   const dataResponse = React.useRef({});
+  const navigate = useNavigate();
 
   const HandleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const config = {
         headers: {
@@ -18,9 +20,13 @@ const FormRegister = () => {
         name: e.target.name.value,
         email: e.target.email.value,
         password: e.target.password.value,
+        status: "user",
       };
       const response = await API.post(`/register`, data, config);
-      console.log(response);
+      if (response.status === 201) {
+        dataResponse.current = response.data.data;
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +113,7 @@ const FormRegister = () => {
               <Form onSubmit={HandleSubmit}>
                 <h3 className="judul-login-form mx-5">Register</h3>
                 <div className="mx-5">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3">
                     <Form.Control
                       type="text"
                       name="name"
@@ -118,7 +124,7 @@ const FormRegister = () => {
                 </div>
 
                 <div className="mx-5">
-                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Group className="mb-3">
                     <Form.Control
                       type="email"
                       name="email"
@@ -129,7 +135,7 @@ const FormRegister = () => {
                 </div>
 
                 <div className="mx-5">
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
+                  <Form.Group className="mb-3">
                     <Form.Control
                       type="password"
                       name="password"
