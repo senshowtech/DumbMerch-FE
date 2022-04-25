@@ -1,5 +1,5 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/home.css";
 
 const Navbars = () => {
@@ -9,6 +9,12 @@ const Navbars = () => {
   let url = window.location.href;
   let host = window.location.host;
   let final_url = url.replace(`http://${host}`, "");
+  const navigate = useNavigate();
+
+  const Logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="black" variant="dark">
@@ -70,7 +76,11 @@ const Navbars = () => {
               >
                 Product
               </Nav.Link>
-              <Nav.Link as={Link} to="/login" className="nav-inactive-color">
+              <Nav.Link
+                onClick={() => Logout()}
+                to="/login"
+                className="nav-inactive-color"
+              >
                 Logout
               </Nav.Link>
             </Nav>
@@ -107,7 +117,11 @@ const Navbars = () => {
               >
                 Profile
               </Nav.Link>
-              <Nav.Link as={Link} to="/login" className="nav-inactive-color">
+              <Nav.Link
+                onClick={() => Logout()}
+                to="/login"
+                className="nav-inactive-color"
+              >
                 Logout
               </Nav.Link>
             </Nav>
