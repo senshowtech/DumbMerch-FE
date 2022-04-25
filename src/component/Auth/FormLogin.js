@@ -1,12 +1,12 @@
 import React from "react";
 import "../../assets/css/login.css";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../config/axios";
 const FormLogin = () => {
   const dataResponse = React.useRef({});
+  const [errorMessage, seterrorMessage] = React.useState("");
   const navigate = useNavigate();
-
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -43,7 +43,24 @@ const FormLogin = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      seterrorMessage(error.response.data);
+    }
+  };
+
+  const RenderAlert = () => {
+    if (errorMessage !== "") {
+      return (
+        <Alert
+          variant="danger"
+          style={{
+            width: "416px",
+            textAlign: "center",
+            marginTop: "30px",
+          }}
+        >
+          {errorMessage.message}
+        </Alert>
+      );
     }
   };
 
@@ -125,6 +142,7 @@ const FormLogin = () => {
 
         <div className="col-12 col-lg">
           <div className="box-kanan">
+            {RenderAlert()}
             <div className="d-flex align-items-center login-box">
               <Form onSubmit={HandleSubmit}>
                 <h3 className="judul-login-form mx-5">Login</h3>
