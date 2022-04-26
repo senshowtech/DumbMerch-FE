@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../config/axios";
 
 const FormRegister = () => {
-  const dataResponse = React.useRef({});
   const [errorMessage, seterrorMessage] = React.useState("");
   const navigate = useNavigate();
 
@@ -25,10 +24,10 @@ const FormRegister = () => {
       };
       const response = await API.post(`/register`, data, config);
       if (response.status === 201) {
-        dataResponse.current = response.data.data;
         navigate("/login");
       }
     } catch (error) {
+      console.log(error);
       seterrorMessage(error.response.data);
     }
   };

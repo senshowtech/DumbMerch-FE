@@ -1,18 +1,23 @@
+import "../assets/css/home.css";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import "../assets/css/home.css";
+import { useContext } from "react";
+import { UserContext } from "../context/userContext";
 
 const Navbars = () => {
-  let Getdatalogin = localStorage.getItem("token");
-  let isAdmin = JSON.parse(Getdatalogin).isAdmin;
+  const [state, dispatch] = useContext(UserContext);
+  const navigate = useNavigate();
+
+  let isAdmin = state.isAdmin;
 
   let url = window.location.href;
   let host = window.location.host;
   let final_url = url.replace(`http://${host}`, "");
-  const navigate = useNavigate();
 
   const Logout = () => {
-    localStorage.removeItem("token");
+    dispatch({
+      type: "LOGOUT",
+    });
     navigate("/login");
   };
 

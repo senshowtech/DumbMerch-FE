@@ -3,10 +3,14 @@ import "../../assets/css/login.css";
 import { Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../config/axios";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
+
 const FormLogin = () => {
-  const dataResponse = React.useRef({});
+  const [state, dispatch] = useContext(UserContext);
   const [errorMessage, seterrorMessage] = React.useState("");
   const navigate = useNavigate();
+
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,29 +24,29 @@ const FormLogin = () => {
         password: e.target.password.value,
       };
       const response = await API.post(`/login`, data, config);
-      if (response.status === 201) {
-        dataResponse.current = response.data.data;
-      }
-      if (dataResponse.current.user.status === "admin") {
-        localStorage.setItem(
-          "token",
-          JSON.stringify({
-            token: dataResponse.current.user.token,
+      if (response.data.data.user.status === "admin") {
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            user: response.data.data,
             isAdmin: true,
-          })
-        );
+            token: response.data.data.user.token,
+          },
+        });
         navigate("/product");
       } else {
-        localStorage.setItem(
-          "token",
-          JSON.stringify({
-            token: dataResponse.current.user.token,
-            isAdmin: false,
-          })
-        );
+        dispatch({
+          type: "LOGIN_SUCCESS",
+          payload: {
+            user: response.data.data,
+            isAdmin: true,
+            token: response.data.data.user.token,
+          },
+        });
         navigate("/");
       }
     } catch (error) {
+      console.log(error);
       seterrorMessage(error.response.data);
     }
   };

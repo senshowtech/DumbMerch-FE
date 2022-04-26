@@ -1,13 +1,14 @@
-import { useState } from "react";
+import React from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { dataProduk } from "../../dummy/dataProduk";
+import { API } from "../../config/axios";
 import "../../assets/css/category.css";
 
 const Product = () => {
   const navigate = useNavigate();
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,6 +19,18 @@ const Product = () => {
       },
     });
   };
+
+  React.useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await API.get("/products/0");
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, []);
 
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",

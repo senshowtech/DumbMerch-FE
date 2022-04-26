@@ -1,4 +1,9 @@
+import React from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { setAuthToken } from "./config/axios";
+import { useContext } from "react";
+import { UserContext } from "./context/userContext";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/main.css";
 // product
@@ -24,8 +29,22 @@ import ComplainUserPage from "./pages/Complain/ComplainUserPage";
 import PrivateRoute from "./component/PrivateRoute";
 import NotFound from "./component/404NotFound";
 import OngkirPage from "./pages/OngkirPage";
+import ProfileRoute from "./component/ProfileRoute";
 
 const App = () => {
+  const [state, dispatch] = useContext(UserContext);
+
+  // Ngecek Auth jika di reload
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+
+  React.useEffect(() => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+  }, [state]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -33,7 +52,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ongkir" element={<OngkirPage />} />
-        <Route path="/" element={<PrivateRoute />}>
+        <Route element={<PrivateRoute />}>
           {/* User */}
           <Route path="/" element={<Home />} />
           <Route path="/detail-page" element={<DetailPage />} />
