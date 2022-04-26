@@ -1,16 +1,23 @@
 import React from "react";
-import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import "../../assets/css/edit.css";
+import { API } from "../../config/axios";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 
 const AddProductForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
+  const [state, dispatch] = useContext(UserContext);
+  const [preview, setPreview] = React.useState(null);
+  const image = React.useRef(null);
+
+  console.log(state);
 
   React.useEffect(() => {
     const getProvince = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/provinsi");
+        const response = await API.get("/provinsis");
         setProvince(response.data.rajaongkir.results);
       } catch (error) {
         console.log(error);
@@ -22,10 +29,39 @@ const AddProductForm = () => {
   const HandleNamaKota = async (e) => {
     const provinsi = e.target.value;
     try {
-      const response = await axios.get(
-        `http://localhost:5000/kota/${provinsi}`
-      );
+      const response = await API.get(`/kota/${provinsi}s`);
       setnamaKota(response.data.rajaongkir.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleChange = (e) => {
+    if (e.target.type === "file") {
+      image.current = e.target.files[0];
+    }
+    if (e.target.type === "file") {
+      let url = URL.createObjectURL(e.target.files[0]);
+      setPreview(url);
+    }
+  };
+
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const config = {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      };
+      const formData = new FormData();
+      formData.set("image", image.current, image.current.name);
+      formData.set("title", e.target.title.value);
+      formData.set("desc", e.target.desc.value);
+      formData.set("price", e.target.price.value);
+      formData.set("qty", e.target.qty.value);
+      formData.set("kurir", [1, 1]);
+      const response = await API.post("/product", formData, config);
     } catch (error) {
       console.log(error);
     }
@@ -36,14 +72,15 @@ const AddProductForm = () => {
       <div className="row">
         <div className="col-1"></div>
         <div className="col-10">
-          <Form>
+          <Form onSubmit={HandleSubmit}>
             <h3 className="judul-login-form mx-5">Add Product</h3>
             <div className="mx-5">
               <input
                 type="file"
-                accept="image/*"
+                name="image"
                 style={{ display: "none" }}
                 id="contained-button-file"
+                onChange={handleChange}
               />
               <label htmlFor="contained-button-file">
                 <div className="d-flex justify-content-center align-items-center upload-buttons text-center">
@@ -51,10 +88,28 @@ const AddProductForm = () => {
                 </div>
               </label>
             </div>
+            <div className="mx-5 mb-4">
+              <div>
+                {preview && (
+                  <div>
+                    <img
+                      src={preview}
+                      style={{
+                        maxWidth: "150px",
+                        maxHeight: "150px",
+                        objectFit: "cover",
+                      }}
+                      alt={preview}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
             <div className="mx-5">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="text"
+                  name="title"
                   placeholder="Product"
                   className="form-background"
                 />
@@ -64,6 +119,7 @@ const AddProductForm = () => {
             <div className="mx-5 mb-4">
               <div className="form-group">
                 <textarea
+                  name="desc"
                   className="form-control form-background"
                   id="exampleFormControlTextarea1"
                   rows="5"
@@ -73,9 +129,10 @@ const AddProductForm = () => {
             </div>
 
             <div className="mx-5">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="number"
+                  name="price"
                   placeholder="Price"
                   className="form-background"
                 />
@@ -83,9 +140,10 @@ const AddProductForm = () => {
             </div>
 
             <div className="mx-5 mb-2">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="number"
+                  name="qty"
                   placeholder="Quantity"
                   className="form-background"
                 />
@@ -93,9 +151,10 @@ const AddProductForm = () => {
             </div>
 
             <div className="mx-5 mb-2">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="number"
+                  name="weight"
                   placeholder="Berat Barang"
                   className="form-background"
                 />

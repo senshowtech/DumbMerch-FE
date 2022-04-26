@@ -8,7 +8,8 @@ const Navbars = () => {
   const [state, dispatch] = useContext(UserContext);
   const navigate = useNavigate();
 
-  let isAdmin = state.isAdmin;
+  let Getdatalogin = localStorage.getItem("isAdmin");
+  let isAdmin = JSON.parse(Getdatalogin);
 
   let url = window.location.href;
   let host = window.location.host;
