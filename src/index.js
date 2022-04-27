@@ -1,13 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { QueryClient, QueryClientProvider } from "react-query";
 import reportWebVitals from "./reportWebVitals";
 import { UserContextProvider } from "./context/userContext";
+
+const client = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
     <UserContextProvider>
-      <App />
+      <QueryClientProvider client={client}>
+        <App />
+      </QueryClientProvider>
     </UserContextProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -1,9 +1,10 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
 import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
+import { Form, Button } from "react-bootstrap";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddProductForm = () => {
   const [province, setProvince] = React.useState([]);
@@ -11,13 +12,12 @@ const AddProductForm = () => {
   const [state, dispatch] = useContext(UserContext);
   const [preview, setPreview] = React.useState(null);
   const image = React.useRef(null);
-
-  console.log(state);
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     const getProvince = async () => {
       try {
-        const response = await API.get("/provinsis");
+        const response = await API.get("/provinsi");
         setProvince(response.data.rajaongkir.results);
       } catch (error) {
         console.log(error);
@@ -29,7 +29,7 @@ const AddProductForm = () => {
   const HandleNamaKota = async (e) => {
     const provinsi = e.target.value;
     try {
-      const response = await API.get(`/kota/${provinsi}s`);
+      const response = await API.get(`/kota/${provinsi}`);
       setnamaKota(response.data.rajaongkir.results);
     } catch (error) {
       console.log(error);
@@ -54,14 +54,21 @@ const AddProductForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
+      let kota = e.target.kota.value;
+      let kurir = e.target.kurir.value;
+      let weight = e.target.weight.value;
+      let dataOngkir = [{ kota: kota }, { kurir: kurir }, { weight: weight }];
       const formData = new FormData();
       formData.set("image", image.current, image.current.name);
       formData.set("title", e.target.title.value);
       formData.set("desc", e.target.desc.value);
       formData.set("price", e.target.price.value);
       formData.set("qty", e.target.qty.value);
-      formData.set("kurir", [1, 1]);
+      formData.set("kurir", JSON.stringify(dataOngkir));
       const response = await API.post("/product", formData, config);
+      if (response.status === 201) {
+        navigate("/product");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -105,6 +112,7 @@ const AddProductForm = () => {
                 )}
               </div>
             </div>
+
             <div className="mx-5">
               <Form.Group className="mb-3">
                 <Form.Control

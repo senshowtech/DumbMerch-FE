@@ -3,6 +3,7 @@ import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { dataProduk } from "../../dummy/dataProduk";
 import { API } from "../../config/axios";
+import { useQuery } from "react-query";
 import "../../assets/css/category.css";
 
 const Product = () => {
@@ -20,17 +21,24 @@ const Product = () => {
     });
   };
 
-  React.useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const response = await API.get("/products/0");
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProduct();
-  }, []);
+  let { data: products } = useQuery("productsCache", async () => {
+    const response = await API.get("/products/0");
+    return response.data.data.products.rows;
+  });
+
+  // console.log(products);
+
+  // React.useEffect(() => {
+  //   const getProduct = async () => {
+  //     try {
+  //       const response = await API.get("/products/0");
+  //       console.log(response.data.data.products.rows);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getProduct();
+  // }, []);
 
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -71,30 +79,30 @@ const Product = () => {
             </tr>
           </thead>
           <tbody>
-            {dataProduk.map((value, index) => {
+            {products?.map((value, index) => {
               return (
                 <tr key={value.id}>
                   <td className="align-middle">{value.id}</td>
-                  <td className="align-middle">{value.nama}</td>
+                  <td className="align-middle">{value.title}</td>
                   <td>
                     <div
                       style={{ width: "80px", height: "100px", margin: "auto" }}
                     >
-                      <img src={value.gambar} className="img-fluid" alt="..." />
+                      <img src={value.image} className="img-fluid" alt="..." />
                     </div>
                   </td>
-                  <td className="align-middle">{`${value.deskripsi.slice(
+                  <td className="align-middle">{`${value.desc.slice(
                     0,
                     70
                   )}...`}</td>
                   <td className="align-middle">
-                    {formatter.format(value.harga)}
+                    {formatter.format(value.price)}
                   </td>
-                  <td className="align-middle">{value.stok}</td>
+                  <td className="align-middle">{value.qty}</td>
                   <td className="align-middle">
                     {/* ganti id jika sudah pake api */}
                     <Button
-                      onClick={() => EditProduct(index)}
+                      onClick={() => EditProduct(value.index)}
                       variant="success"
                       className="button-category"
                     >
