@@ -1,15 +1,14 @@
 import React from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { dataProduk } from "../../dummy/dataProduk";
 import { API } from "../../config/axios";
-import { useQuery } from "react-query";
 import "../../assets/css/category.css";
 
 const Product = () => {
   const navigate = useNavigate();
 
   const [show, setShow] = React.useState(false);
+  const [products, setProducts] = React.useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -21,24 +20,17 @@ const Product = () => {
     });
   };
 
-  let { data: products } = useQuery("productsCache", async () => {
-    const response = await API.get("/products/0");
-    return response.data.data.products.rows;
-  });
-
-  // console.log(products);
-
-  // React.useEffect(() => {
-  //   const getProduct = async () => {
-  //     try {
-  //       const response = await API.get("/products/0");
-  //       console.log(response.data.data.products.rows);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   getProduct();
-  // }, []);
+  React.useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await API.get("/products/0");
+        setProducts(response.data.data.products.rows);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, []);
 
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
@@ -100,9 +92,8 @@ const Product = () => {
                   </td>
                   <td className="align-middle">{value.qty}</td>
                   <td className="align-middle">
-                    {/* ganti id jika sudah pake api */}
                     <Button
-                      onClick={() => EditProduct(value.index)}
+                      onClick={() => EditProduct(value.id)}
                       variant="success"
                       className="button-category"
                     >

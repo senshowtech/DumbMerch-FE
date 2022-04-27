@@ -2,14 +2,11 @@ import React from "react";
 import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
 import { Form, Button } from "react-bootstrap";
-import { useContext } from "react";
-import { UserContext } from "../../context/userContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddProductForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
-  const [state, dispatch] = useContext(UserContext);
   const [preview, setPreview] = React.useState(null);
   const image = React.useRef(null);
   const navigate = useNavigate();
@@ -81,6 +78,7 @@ const AddProductForm = () => {
         <div className="col-10">
           <Form onSubmit={HandleSubmit}>
             <h3 className="judul-login-form mx-5">Add Product</h3>
+
             <div className="mx-5">
               <input
                 type="file"
@@ -95,6 +93,7 @@ const AddProductForm = () => {
                 </div>
               </label>
             </div>
+
             <div className="mx-5 mb-4">
               <div>
                 {preview && (
