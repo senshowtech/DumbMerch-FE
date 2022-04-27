@@ -1,13 +1,14 @@
 import React from "react";
 import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const AddProductForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
+  const [error, setError] = React.useState("");
   const image = React.useRef(null);
   const navigate = useNavigate();
 
@@ -24,9 +25,9 @@ const AddProductForm = () => {
   }, []);
 
   const HandleNamaKota = async (e) => {
-    const provinsi = e.target.value;
+    const provinsi = e.target.value.split(",");
     try {
-      const response = await API.get(`/kota/${provinsi}`);
+      const response = await API.get(`/kota/${provinsi[0]}`);
       setnamaKota(response.data.rajaongkir.results);
     } catch (error) {
       console.log(error);
@@ -43,6 +44,23 @@ const AddProductForm = () => {
     }
   };
 
+  const RenderAlert = () => {
+    if (error !== "") {
+      return (
+        <Alert
+          variant="danger"
+          style={{
+            width: "416px",
+            textAlign: "center",
+            marginTop: "30px",
+          }}
+        >
+          {error}
+        </Alert>
+      );
+    }
+  };
+
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -51,11 +69,22 @@ const AddProductForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
-      let kota = e.target.kota.value;
+      let kota = e.target.kota.value.split(",");
       let kurir = e.target.kurir.value;
       let weight = e.target.weight.value;
-      let dataOngkir = [{ kota: kota }, { kurir: kurir }, { weight: weight }];
+      let provinsi = e.target.provinsi.value.split(",");
+      let dataOngkir = [
+        { idkota: kota[0] },
+        { namakota: kota[1] },
+        { kurir: kurir },
+        { weight: weight },
+        { idprovinsi: provinsi[0] },
+        { namaprovinsi: provinsi[1] },
+      ];
       const formData = new FormData();
+      if (image.current == null) {
+        setError("silahkan isi gambar");
+      }
       formData.set("image", image.current, image.current.name);
       formData.set("title", e.target.title.value);
       formData.set("desc", e.target.desc.value);
@@ -77,8 +106,8 @@ const AddProductForm = () => {
         <div className="col-1"></div>
         <div className="col-10">
           <Form onSubmit={HandleSubmit}>
+            <div className="d-flex justify-content-center">{RenderAlert()}</div>
             <h3 className="judul-login-form mx-5">Add Product</h3>
-
             <div className="mx-5">
               <input
                 type="file"
@@ -177,7 +206,10 @@ const AddProductForm = () => {
                 <option defaultValue={"Pilih"}>Pilih Provinsi</option>
                 {province.map((value) => {
                   return (
-                    <option key={value.province_id} value={value.province_id}>
+                    <option
+                      key={value.province_id}
+                      value={`${value.province_id},${value.province}`}
+                    >
                       {value.province}
                     </option>
                   );
@@ -190,7 +222,10 @@ const AddProductForm = () => {
                 <option defaultValue={"Pilih"}>Pilih Kota</option>
                 {namaKota.map((value) => {
                   return (
-                    <option key={value.city_id} value={value.city_id}>
+                    <option
+                      key={value.city_id}
+                      value={`${value.city_id},${value.city_name}`}
+                    >
                       {value.city_name}
                     </option>
                   );

@@ -1,7 +1,7 @@
 import React from "react";
 import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const EditProductForm = () => {
@@ -11,6 +11,7 @@ const EditProductForm = () => {
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
   const [product, setProduct] = React.useState(null);
+  const [error, setError] = React.useState("");
 
   const image = React.useRef(null);
   const id = state.id;
@@ -35,7 +36,7 @@ const EditProductForm = () => {
       }
     };
     getProvince();
-  }, []);
+  }, [id]);
 
   const HandleNamaKota = async (e) => {
     const provinsi = e.target.value;
@@ -65,11 +66,22 @@ const EditProductForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
-      let kota = e.target.kota.value;
+      let kota = e.target.kota.value.split(",");
       let kurir = e.target.kurir.value;
       let weight = e.target.weight.value;
-      let dataOngkir = [{ kota: kota }, { kurir: kurir }, { weight: weight }];
+      let provinsi = e.target.provinsi.value.split(",");
+      let dataOngkir = [
+        { idkota: kota[0] },
+        { namakota: kota[1] },
+        { kurir: kurir },
+        { weight: weight },
+        { idprovinsi: provinsi[0] },
+        { namaprovinsi: provinsi[1] },
+      ];
       const formData = new FormData();
+      if (image.current == null) {
+        setError("silahkan isi gambar");
+      }
       formData.set("image", image.current, image.current.name);
       formData.set("title", e.target.title.value);
       formData.set("desc", e.target.desc.value);
@@ -85,21 +97,38 @@ const EditProductForm = () => {
     }
   };
 
+  const RenderAlert = () => {
+    if (error !== "") {
+      return (
+        <Alert
+          variant="danger"
+          style={{
+            width: "416px",
+            textAlign: "center",
+            marginTop: "30px",
+          }}
+        >
+          {error}
+        </Alert>
+      );
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-1"></div>
         <div className="col-10">
           <Form onSubmit={HandleSubmit}>
-            <h3 className="judul-login-form mx-5">Edit Product</h3>
-
+            <div className="d-flex justify-content-center">{RenderAlert()}</div>
+            <h3 className="judul-login-form mx-5">Add Product</h3>
             <div className="mx-5">
               <input
                 type="file"
-                style={{ display: "none" }}
                 name="image"
-                onChange={handleChange}
+                style={{ display: "none" }}
                 id="contained-button-file"
+                onChange={handleChange}
               />
               <label htmlFor="contained-button-file">
                 <div className="d-flex justify-content-center align-items-center upload-buttons text-center">
@@ -127,11 +156,11 @@ const EditProductForm = () => {
             </div>
 
             <div className="mx-5">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="text"
-                  name="title"
                   defaultValue={product?.title}
+                  name="title"
                   placeholder="Product"
                   className="form-background"
                 />
@@ -141,9 +170,10 @@ const EditProductForm = () => {
             <div className="mx-5 mb-4">
               <div className="form-group">
                 <textarea
+                  defaultValue={product?.desc}
                   name="desc"
                   className="form-control form-background"
-                  defaultValue={product?.desc}
+                  id="exampleFormControlTextarea1"
                   rows="5"
                   placeholder="Description"
                 />
@@ -151,11 +181,11 @@ const EditProductForm = () => {
             </div>
 
             <div className="mx-5">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
-                  name="price"
                   defaultValue={product?.price}
                   type="number"
+                  name="price"
                   placeholder="Price"
                   className="form-background"
                 />
@@ -163,11 +193,11 @@ const EditProductForm = () => {
             </div>
 
             <div className="mx-5 mb-2">
-              <Form.Group className="mb-3" controlId="formBasicEmail">
+              <Form.Group className="mb-3">
                 <Form.Control
-                  name="qty"
                   defaultValue={product?.qty}
                   type="number"
+                  name="qty"
                   placeholder="Quantity"
                   className="form-background"
                 />
@@ -177,9 +207,9 @@ const EditProductForm = () => {
             <div className="mx-5 mb-2">
               <Form.Group className="mb-3">
                 <Form.Control
-                  name="weight"
-                  defaultValue={product?.kurir[2].weight}
+                  defaultValue={product?.kurir[3].weight}
                   type="number"
+                  name="weight"
                   placeholder="Berat Barang"
                   className="form-background"
                 />
@@ -192,10 +222,17 @@ const EditProductForm = () => {
                 name="provinsi"
                 className="select-pembayaran"
               >
-                <option defaultValue={"Pilih"}>Pilih Provinsi</option>
+                <option
+                  value={`${product?.kurir[4].idprovinsi},${product?.kurir[5].namaprovinsi}`}
+                >
+                  {product?.kurir[5].namaprovinsi}
+                </option>
                 {province.map((value) => {
                   return (
-                    <option key={value.province_id} value={value.province_id}>
+                    <option
+                      key={value.province_id}
+                      value={`${value.province_id},${value.province}`}
+                    >
                       {value.province}
                     </option>
                   );
@@ -205,10 +242,17 @@ const EditProductForm = () => {
 
             <div className="mx-5 mb-2">
               <Form.Select className="mt-4 select-pembayaran" name="kota">
-                <option defaultValue={"Pilih"}>Pilih Kota</option>
+                <option
+                  value={`${product?.kurir[0].idkota},${product?.kurir[1].namakota}`}
+                >
+                  {product?.kurir[1].namakota}
+                </option>
                 {namaKota.map((value) => {
                   return (
-                    <option key={value.city_id} value={value.city_id}>
+                    <option
+                      key={value.city_id}
+                      value={`${value.city_id},${value.city_name}`}
+                    >
                       {value.city_name}
                     </option>
                   );
@@ -218,7 +262,9 @@ const EditProductForm = () => {
 
             <div className="mx-5 mb-2">
               <Form.Select className="mt-4 select-pembayaran" name="kurir">
-                <option>Pilih Kurir</option>
+                <option value={product?.kurir[2].kurir}>
+                  {product?.kurir[2].kurir.toUpperCase()}
+                </option>
                 <option value="jne">JNE</option>
                 <option value="pos">POS</option>
                 <option value="tiki">TIKI</option>
