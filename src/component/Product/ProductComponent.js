@@ -1,17 +1,45 @@
 import React from "react";
-import { Table, Button, Modal } from "react-bootstrap";
+import { Table, Button, Modal, Pagination } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../config/axios";
 import "../../assets/css/category.css";
 
 const Product = () => {
   const navigate = useNavigate();
-
   const [show, setShow] = React.useState(false);
-  const [products, setProducts] = React.useState(null);
+  const [idProduk, setidProduk] = React.useState(null);
+  const [page, setPage] = React.useState(0);
+  const [products, setProducts] = React.useState({
+    product: null,
+    jumlah_page: null,
+  });
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  React.useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const response = await API.get("/products/" + page);
+        setProducts((prevState) => {
+          return {
+            ...prevState,
+            product: response.data.data.products.rows,
+            jumlah_page: response.data.data.products.count,
+          };
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [idProduk, page]);
+
+  let formatter = new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0,
+  });
+
   const EditProduct = (id) => {
     navigate("/edit-product", {
       state: {
@@ -20,23 +48,56 @@ const Product = () => {
     });
   };
 
-  React.useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const response = await API.get("/products/0");
-        setProducts(response.data.data.products.rows);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProduct();
-  }, []);
+  const handleShow = (id) => {
+    setShow(true);
+    setidProduk(id);
+  };
 
-  let formatter = new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    maximumFractionDigits: 0,
-  });
+  const Delete = async () => {
+    try {
+      const response = await API.delete("/product/" + idProduk);
+      if (response.status === 201) {
+        setShow(false);
+        setidProduk(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Paginations = () => {
+    let active = page;
+    if (active === 0) {
+      active = 1;
+    }
+    let items = [];
+    let jumlah_page = products.jumlah_page / 8;
+    for (let number = 1; number <= jumlah_page; number++) {
+      items.push(
+        <Pagination.Item
+          key={number}
+          active={number === active}
+          onClick={() => ChangePage(number)}
+        >
+          {number}
+        </Pagination.Item>
+      );
+    }
+    return (
+      <div className="d-flex justify-content-center">
+        <Pagination>
+          <Pagination.First />
+          {items}
+          <Pagination.Last />
+        </Pagination>
+      </div>
+    );
+  };
+
+  const ChangePage = (id) => {
+    console.log(id);
+    setPage(id);
+  };
 
   return (
     <div className="d-flex justify-content-center">
@@ -51,81 +112,93 @@ const Product = () => {
             Add
           </Link>
         </div>
-        <Table
-          striped
-          bordered
-          hover
-          variant="dark"
-          responsive
-          className="my-4"
-        >
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Photo</th>
-              <th>Product Name</th>
-              <th>Product Desc</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products?.map((value, index) => {
-              return (
-                <tr key={value.id}>
-                  <td className="align-middle">{value.id}</td>
-                  <td className="align-middle">{value.title}</td>
-                  <td>
-                    <div
-                      style={{ width: "80px", height: "100px", margin: "auto" }}
-                    >
-                      <img src={value.image} className="img-fluid" alt="..." />
-                    </div>
-                  </td>
-                  <td className="align-middle">{`${value.desc.slice(
-                    0,
-                    70
-                  )}...`}</td>
-                  <td className="align-middle">
-                    {formatter.format(value.price)}
-                  </td>
-                  <td className="align-middle">{value.qty}</td>
-                  <td className="align-middle">
-                    <Button
-                      onClick={() => EditProduct(value.id)}
-                      variant="success"
-                      className="button-category"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={handleShow}
-                      className="button-category"
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Body>
-            <h3>Delete Data</h3>
-            <p>Are you sure you want to delete this data?</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="success" onClick={handleClose}>
-              Ya
-            </Button>
-            <Button variant="danger" onClick={handleClose}>
-              Tidak
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <div>
+          <Table
+            striped
+            bordered
+            hover
+            variant="dark"
+            responsive
+            className="my-4"
+          >
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Photo</th>
+                <th>Product Name</th>
+                <th>Product Desc</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.product?.map((value, index) => {
+                return (
+                  <tr key={value.id}>
+                    <td className="align-middle">{value.id}</td>
+                    <td className="align-middle">{value.title}</td>
+                    <td>
+                      <div
+                        className="mx-auto mt-5"
+                        style={{
+                          width: "80px",
+                          height: "100px",
+                        }}
+                      >
+                        <img
+                          src={value.image}
+                          className="img-fluid "
+                          alt="..."
+                        />
+                      </div>
+                    </td>
+                    <td className="align-middle">{`${value.desc.slice(
+                      0,
+                      70
+                    )}...`}</td>
+                    <td className="align-middle">
+                      {formatter.format(value.price)}
+                    </td>
+                    <td className="align-middle">{value.qty}</td>
+                    <td className="align-middle">
+                      <Button
+                        onClick={() => EditProduct(value.id)}
+                        variant="success"
+                        className="button-category"
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleShow(value.id)}
+                        className="button-category"
+                      >
+                        Delete
+                      </Button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Body>
+                <h3>Delete Data</h3>
+                <p>Are you sure you want to delete this data?</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="success" onClick={() => Delete()}>
+                  Ya
+                </Button>
+                <Button variant="danger" onClick={handleClose}>
+                  Tidak
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </Table>
+          {Paginations()}
+        </div>
       </div>
     </div>
   );
