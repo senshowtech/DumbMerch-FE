@@ -8,10 +8,13 @@ const Product = () => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
   const [idProduk, setidProduk] = React.useState(null);
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [products, setProducts] = React.useState({
     product: null,
-    jumlah_page: null,
+    total_page: null,
+    current_page: null,
+    last_page: null,
+    total_data: null,
   });
 
   const handleClose = () => setShow(false);
@@ -23,8 +26,11 @@ const Product = () => {
         setProducts((prevState) => {
           return {
             ...prevState,
-            product: response.data.data.products.rows,
-            jumlah_page: response.data.data.products.count,
+            product: response.data.data.products,
+            total_page: response.data.data.total_page,
+            current_page: response.data.data.current_page,
+            last_page: response.data.data.last_page,
+            total_data: response.data.data.total_data,
           };
         });
       } catch (error) {
@@ -67,12 +73,8 @@ const Product = () => {
 
   const Paginations = () => {
     let active = page;
-    if (active === 0) {
-      active = 1;
-    }
     let items = [];
-    let jumlah_page = products.jumlah_page / 8;
-    for (let number = 1; number <= jumlah_page; number++) {
+    for (let number = 1; number <= products.total_page; number++) {
       items.push(
         <Pagination.Item
           key={number}
