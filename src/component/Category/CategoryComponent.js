@@ -1,16 +1,44 @@
-import { useState } from "react";
+import React from "react";
 import { Table, Button, Modal } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { dataCategory } from "../../dummy/dataCategory";
-
+import { API } from "../../config/axios";
 import "../../assets/css/category.css";
+
 const Category = () => {
   const navigate = useNavigate();
-
-  const [show, setShow] = useState(false);
-
+  const [show, setShow] = React.useState(false);
+  const [category, setCategory] = React.useState(null);
+  const [idCategory, setidCategory] = React.useState(null);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const handleShow = (id) => {
+    setShow(true);
+    setidCategory(id);
+  };
+
+  React.useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const response = await API.get("/categories");
+        setCategory(response.data.data.categories);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCategory();
+  }, [idCategory]);
+
+  const Delete = async () => {
+    try {
+      const response = await API.delete("/category/" + idCategory);
+      if (response.status === 201) {
+        setShow(false);
+        setidCategory(null);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const EditCategory = (id) => {
     navigate("/edit-category", {
@@ -49,23 +77,22 @@ const Category = () => {
             </tr>
           </thead>
           <tbody>
-            {dataCategory.map((value, index) => {
+            {category?.map((value, index) => {
               return (
                 <tr key={value.id}>
                   <td className="column-1 align-middle">{value.id}</td>
-                  <td className="column-2 align-middle">{value.category}</td>
+                  <td className="column-2 align-middle">{value.name}</td>
                   <td className="align-middle">
-                    {/* ganti id jika sudah pake api */}
                     <Button
                       variant="success"
-                      onClick={() => EditCategory(index)}
+                      onClick={() => EditCategory(value.id)}
                       className="button-category"
                     >
                       Edit
                     </Button>
                     <Button
                       variant="danger"
-                      onClick={handleShow}
+                      onClick={() => handleShow(value.id)}
                       className="button-category"
                     >
                       Delete
@@ -82,7 +109,7 @@ const Category = () => {
             <p>Are you sure you want to delete this data?</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="success" onClick={handleClose}>
+            <Button variant="success" onClick={() => Delete()}>
               Ya
             </Button>
             <Button variant="danger" onClick={handleClose}>

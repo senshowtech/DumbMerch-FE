@@ -12,7 +12,6 @@ const EditProductForm = () => {
   const [preview, setPreview] = React.useState(null);
   const [product, setProduct] = React.useState(null);
   const [error, setError] = React.useState("");
-
   const image = React.useRef(null);
   const id = state.id;
 

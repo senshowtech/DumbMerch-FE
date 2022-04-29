@@ -97,7 +97,6 @@ const Product = () => {
   };
 
   const ChangePage = (id) => {
-    console.log(id);
     setPage(id);
   };
 
