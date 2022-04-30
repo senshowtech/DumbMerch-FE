@@ -70,23 +70,6 @@ const AddProductForm = () => {
     setCategory(e);
   };
 
-  const RenderAlert = () => {
-    if (error !== "") {
-      return (
-        <Alert
-          variant="danger"
-          style={{
-            width: "416px",
-            textAlign: "center",
-            marginTop: "30px",
-          }}
-        >
-          {error}
-        </Alert>
-      );
-    }
-  };
-
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -128,6 +111,24 @@ const AddProductForm = () => {
       }
     } catch (error) {
       console.log(error);
+      setError(error.response.data.message);
+    }
+  };
+
+  const RenderAlert = () => {
+    if (error !== "") {
+      return (
+        <Alert
+          variant="danger"
+          style={{
+            width: "416px",
+            textAlign: "center",
+            marginTop: "30px",
+          }}
+        >
+          {error}
+        </Alert>
+      );
     }
   };
 
