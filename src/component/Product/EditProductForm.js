@@ -138,18 +138,26 @@ const EditProductForm = () => {
 
             <div className="mx-5 mb-4">
               <div>
-                {preview && (
-                  <div>
-                    <img
-                      src={preview}
-                      style={{
-                        maxWidth: "150px",
-                        maxHeight: "150px",
-                        objectFit: "cover",
-                      }}
-                      alt={preview}
-                    />
-                  </div>
+                {preview === null ? (
+                  <img
+                    src={product?.image}
+                    style={{
+                      maxWidth: "150px",
+                      maxHeight: "150px",
+                      objectFit: "cover",
+                    }}
+                    alt={preview}
+                  />
+                ) : (
+                  <img
+                    src={preview}
+                    style={{
+                      maxWidth: "150px",
+                      maxHeight: "150px",
+                      objectFit: "cover",
+                    }}
+                    alt={preview}
+                  />
                 )}
               </div>
             </div>

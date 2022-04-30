@@ -39,7 +39,7 @@ const FormLogin = () => {
           type: "LOGIN_SUCCESS",
           payload: {
             user: response.data.data,
-            isAdmin: true,
+            isAdmin: false,
             token: response.data.data.user.token,
           },
         });

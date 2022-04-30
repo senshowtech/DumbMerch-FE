@@ -10,7 +10,6 @@ const Category = () => {
   const [category, setCategory] = React.useState(null);
   const [idCategory, setidCategory] = React.useState(null);
   const handleClose = () => setShow(false);
-
   const handleShow = (id) => {
     setShow(true);
     setidCategory(id);

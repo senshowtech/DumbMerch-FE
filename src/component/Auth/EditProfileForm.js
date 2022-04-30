@@ -3,13 +3,10 @@ import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
 
-const AddProductForm = () => {
+const EditProfileForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
-  const [category, setCategory] = React.useState([]);
-  const [categories, setCategories] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
   const [error, setError] = React.useState("");
   const image = React.useRef(null);
@@ -25,25 +22,6 @@ const AddProductForm = () => {
       }
     };
     getProvince();
-    const getCategories = async () => {
-      try {
-        const response = await API.get("/categories");
-        if (response.status === 201) {
-          let data_categories = [];
-          for (let i in response.data.data.categories) {
-            let object_categories = {
-              value: response.data.data.categories[i].id,
-              label: response.data.data.categories[i].name,
-            };
-            data_categories.push(object_categories);
-          }
-          setCategories(data_categories);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCategories();
   }, []);
 
   const HandleNamaKota = async (e) => {
@@ -56,7 +34,7 @@ const AddProductForm = () => {
     }
   };
 
-  const handleChangeImage = (e) => {
+  const handleChange = (e) => {
     if (e.target.type === "file") {
       image.current = e.target.files[0];
     }
@@ -64,10 +42,6 @@ const AddProductForm = () => {
       let url = URL.createObjectURL(e.target.files[0]);
       setPreview(url);
     }
-  };
-
-  const handleChangeCategory = (e) => {
-    setCategory(e);
   };
 
   const RenderAlert = () => {
@@ -95,39 +69,10 @@ const AddProductForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
-      // let kota = e.target.kota.value.split(",");
-      // let kurir = e.target.kurir.value;
-      // let weight = e.target.weight.value;
-      // let provinsi = e.target.provinsi.value.split(",");
-      // let dataOngkir = [
-      //   { idkota: kota[0] },
-      //   { namakota: kota[1] },
-      //   { kurir: kurir },
-      //   { weight: weight },
-      //   { idprovinsi: provinsi[0] },
-      //   { namaprovinsi: provinsi[1] },
-      // ];
-      // const formData = new FormData();
-      // if (image.current == null) {
-      //   setError("silahkan isi gambar");
-      // }
-      // formData.set("image", image.current, image.current.name);
-      // formData.set("title", e.target.title.value);
-      // formData.set("desc", e.target.desc.value);
-      // formData.set("price", e.target.price.value);
-      // formData.set("qty", e.target.qty.value);
-      // formData.set("kurir", JSON.stringify(dataOngkir));
-      // const response = await API.post("/product", formData, config);
-      // if (response.status === 201) {
-      //   navigate("/product");
-      // }
+      const formData = new FormData();
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const colourStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "#181818" }),
   };
 
   return (
@@ -137,14 +82,17 @@ const AddProductForm = () => {
         <div className="col-10">
           <Form onSubmit={HandleSubmit}>
             <div className="d-flex justify-content-center">{RenderAlert()}</div>
-            <h3 className="judul-login-form mx-5">Add Product</h3>
+            <h3 className="judul-login-form mx-5">Profile</h3>
             <div className="mx-5">
+              <h5 style={{ color: "white", marginTop: "20px" }}>
+                Foto Profile
+              </h5>
               <input
                 type="file"
                 name="image"
                 style={{ display: "none" }}
                 id="contained-button-file"
-                onChange={handleChangeImage}
+                onChange={handleChange}
               />
               <label htmlFor="contained-button-file">
                 <div className="d-flex justify-content-center align-items-center upload-buttons text-center">
@@ -171,78 +119,21 @@ const AddProductForm = () => {
               </div>
             </div>
 
-            <div className="mx-5 mb-3">
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  name="title"
-                  placeholder="Product"
-                  className="form-background"
-                />
-              </Form.Group>
-            </div>
-
-            <div className="mx-5 mb-3">
-              <div className="form-group">
-                <textarea
-                  name="desc"
-                  className="form-control form-background"
-                  id="exampleFormControlTextarea1"
-                  rows="5"
-                  placeholder="Description"
-                />
-              </div>
-            </div>
-
-            <div className="mx-5 mb-3">
-              <Form.Group>
+            <div className="mx-5">
+              <Form.Group className="mb-3">
                 <Form.Control
                   type="number"
-                  name="price"
-                  placeholder="Price"
+                  placeholder="Phone"
                   className="form-background"
                 />
               </Form.Group>
             </div>
 
-            <div className="mx-5 mb-3">
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  name="qty"
-                  placeholder="Quantity"
-                  className="form-background"
-                />
-              </Form.Group>
-            </div>
-
-            <div className="mx-5 mb-3">
-              <Select
-                options={categories}
-                styles={colourStyles}
-                onChange={handleChangeCategory}
-                name="category"
-                isMulti
-                placeholder="Category"
-              />
-            </div>
-
-            <div className="mx-5 mb-3">
-              <Form.Group>
-                <Form.Control
-                  type="number"
-                  name="weight"
-                  placeholder="Berat Barang"
-                  className="form-background"
-                />
-              </Form.Group>
-            </div>
-
-            <div className="mx-5 mb-3">
+            <div className="mx-5 mb-2">
               <Form.Select
                 onChange={HandleNamaKota}
                 name="provinsi"
-                className="form-background"
+                className="select-pembayaran"
               >
                 <option defaultValue={"Pilih"}>Pilih Provinsi</option>
                 {province.map((value) => {
@@ -258,8 +149,8 @@ const AddProductForm = () => {
               </Form.Select>
             </div>
 
-            <div className="mx-5 mb-3">
-              <Form.Select className="mt-4 form-background" name="kota">
+            <div className="mx-5 mb-2">
+              <Form.Select className="mt-4 select-pembayaran" name="kota">
                 <option defaultValue={"Pilih"}>Pilih Kota</option>
                 {namaKota.map((value) => {
                   return (
@@ -274,13 +165,15 @@ const AddProductForm = () => {
               </Form.Select>
             </div>
 
-            <div className="mx-5 mb-3">
-              <Form.Select className="mt-4 form-background" name="kurir">
-                <option>Pilih Kurir</option>
-                <option value="jne">JNE</option>
-                <option value="pos">POS</option>
-                <option value="tiki">TIKI</option>
-              </Form.Select>
+            <div className="mx-5 mt-4 mb-4">
+              <div className="form-group">
+                <textarea
+                  className="form-control form-background"
+                  id="exampleFormControlTextarea1"
+                  rows="5"
+                  placeholder="Address"
+                />
+              </div>
             </div>
 
             <div className="mx-5 button-edit-center">
@@ -296,4 +189,4 @@ const AddProductForm = () => {
   );
 };
 
-export default AddProductForm;
+export default EditProfileForm;

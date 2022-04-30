@@ -22,6 +22,7 @@ import DetailPage from "./pages/Home/DetailPage";
 // auth
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import EditProfilePage from "./pages/Auth/EditProfilePage";
 // complain
 import ComplainAdminPage from "./pages/Complain/ComplainAdminPage";
 import ComplainUserPage from "./pages/Complain/ComplainUserPage";
@@ -29,7 +30,6 @@ import ComplainUserPage from "./pages/Complain/ComplainUserPage";
 import PrivateRoute from "./component/PrivateRoute";
 import NotFound from "./component/404NotFound";
 import OngkirPage from "./pages/OngkirPage";
-import ProfileRoute from "./component/ProfileRoute";
 
 const App = () => {
   const [state, dispatch] = useContext(UserContext);
@@ -50,6 +50,7 @@ const App = () => {
       <Routes>
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ongkir" element={<OngkirPage />} />
         <Route element={<PrivateRoute />}>
