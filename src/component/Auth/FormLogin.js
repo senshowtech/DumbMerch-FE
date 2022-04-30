@@ -174,7 +174,7 @@ const FormLogin = () => {
 
                 <div className="mx-5">
                   <Button type="submit" className="login-buttons">
-                    Submit
+                    Login
                   </Button>
                 </div>
               </Form>

@@ -95,32 +95,37 @@ const AddProductForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
-      // let kota = e.target.kota.value.split(",");
-      // let kurir = e.target.kurir.value;
-      // let weight = e.target.weight.value;
-      // let provinsi = e.target.provinsi.value.split(",");
-      // let dataOngkir = [
-      //   { idkota: kota[0] },
-      //   { namakota: kota[1] },
-      //   { kurir: kurir },
-      //   { weight: weight },
-      //   { idprovinsi: provinsi[0] },
-      //   { namaprovinsi: provinsi[1] },
-      // ];
-      // const formData = new FormData();
-      // if (image.current == null) {
-      //   setError("silahkan isi gambar");
-      // }
-      // formData.set("image", image.current, image.current.name);
-      // formData.set("title", e.target.title.value);
-      // formData.set("desc", e.target.desc.value);
-      // formData.set("price", e.target.price.value);
-      // formData.set("qty", e.target.qty.value);
-      // formData.set("kurir", JSON.stringify(dataOngkir));
-      // const response = await API.post("/product", formData, config);
-      // if (response.status === 201) {
-      //   navigate("/product");
-      // }
+      let data_value_category = [];
+      category.forEach((value) => {
+        data_value_category.push(value.value);
+      });
+      let kota = e.target.kota.value.split(",");
+      let kurir = e.target.kurir.value;
+      let weight = e.target.weight.value;
+      let provinsi = e.target.provinsi.value.split(",");
+      let dataOngkir = [
+        { idkota: kota[0] },
+        { namakota: kota[1] },
+        { kurir: kurir },
+        { weight: weight },
+        { idprovinsi: provinsi[0] },
+        { namaprovinsi: provinsi[1] },
+      ];
+      const formData = new FormData();
+      if (image.current == null) {
+        setError("silahkan isi gambar");
+      }
+      formData.set("image", image.current, image.current.name);
+      formData.set("title", e.target.title.value);
+      formData.set("desc", e.target.desc.value);
+      formData.set("price", e.target.price.value);
+      formData.set("qty", e.target.qty.value);
+      formData.set("kurir", JSON.stringify(dataOngkir));
+      formData.set("category", JSON.stringify(data_value_category));
+      const response = await API.post("/product", formData, config);
+      if (response.status === 201) {
+        navigate("/product");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -259,7 +264,7 @@ const AddProductForm = () => {
             </div>
 
             <div className="mx-5 mb-3">
-              <Form.Select className="mt-4 form-background" name="kota">
+              <Form.Select className="form-background" name="kota">
                 <option defaultValue={"Pilih"}>Pilih Kota</option>
                 {namaKota.map((value) => {
                   return (
@@ -275,7 +280,7 @@ const AddProductForm = () => {
             </div>
 
             <div className="mx-5 mb-3">
-              <Form.Select className="mt-4 form-background" name="kurir">
+              <Form.Select className="form-background" name="kurir">
                 <option>Pilih Kurir</option>
                 <option value="jne">JNE</option>
                 <option value="pos">POS</option>
