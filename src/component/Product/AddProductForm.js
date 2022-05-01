@@ -29,15 +29,14 @@ const AddProductForm = () => {
       try {
         const response = await API.get("/categories");
         if (response.status === 201) {
-          let data_categories = [];
-          for (let i in response.data.data.categories) {
-            let object_categories = {
-              value: response.data.data.categories[i].id,
-              label: response.data.data.categories[i].name,
+          let data_categories = response.data.data.categories;
+          const data_categories_baru = data_categories.map((value) => {
+            return {
+              value: value.id,
+              label: value.name,
             };
-            data_categories.push(object_categories);
-          }
-          setCategories(data_categories);
+          });
+          setCategories(data_categories_baru);
         }
       } catch (error) {
         console.log(error);
