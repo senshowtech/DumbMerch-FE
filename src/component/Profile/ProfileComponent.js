@@ -4,7 +4,7 @@ const ProfileComponent = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div class="col-12 col-lg-3">
+        <div className="col-12 col-lg-3">
           <div className="d-flex justify-content-center justify-content-lg-end">
             <img
               src={require("../../assets/img/person.png")}
@@ -13,7 +13,7 @@ const ProfileComponent = () => {
             />
           </div>
         </div>
-        <div class="col-12 col-lg-4">
+        <div className="col-12 col-lg-4">
           <h6 className="judul-profile">Name</h6>
           <p className="paragrapgh-profile">Sena</p>
           <h6 className="judul-profile">Email</h6>
@@ -28,7 +28,7 @@ const ProfileComponent = () => {
             porro, sequi nemo voluptates, ab quo inventore eaque corrupti
           </p>
         </div>
-        <div class="col-12 col-lg-5">
+        <div className="col-12 col-lg-5">
           <h5 className="judul-produk">My Transaction</h5>
           <div className="box-profile d-flex align-items-center">
             <div className="img-samping">

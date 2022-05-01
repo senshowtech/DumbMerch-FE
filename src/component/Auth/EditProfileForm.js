@@ -8,6 +8,7 @@ const EditProfileForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
+  const [city, setCity] = React.useState(null);
   const [error, setError] = React.useState("");
   const image = React.useRef(null);
   const navigate = useNavigate();
@@ -44,6 +45,11 @@ const EditProfileForm = () => {
     }
   };
 
+  const CityHandler = (e) => {
+    let city = e.target.value;
+    setCity(city);
+  };
+
   const RenderAlert = () => {
     if (error !== "") {
       return (
@@ -70,6 +76,20 @@ const EditProfileForm = () => {
         },
       };
       const formData = new FormData();
+      formData.set("image", image.current, image.current.name);
+      formData.set("phone", e.target.phone.value);
+      formData.set("address", e.target.address.value);
+      formData.set("city", city);
+      const response = await API.patch("/profile", formData, config);
+      if (response.status === 201) {
+        const response_user = await API.get("/users");
+        let status = response_user.data.data.users.status;
+        if (status === "user") {
+          navigate("/");
+        } else {
+          navigate("/product");
+        }
+      }
     } catch (error) {
       console.log(error);
     }
@@ -123,6 +143,7 @@ const EditProfileForm = () => {
               <Form.Group className="mb-3">
                 <Form.Control
                   type="number"
+                  name="phone"
                   placeholder="Phone"
                   className="form-background"
                 />
@@ -150,7 +171,11 @@ const EditProfileForm = () => {
             </div>
 
             <div className="mx-5 mb-2">
-              <Form.Select className="mt-4 select-pembayaran" name="kota">
+              <Form.Select
+                className="mt-4 select-pembayaran"
+                onChange={CityHandler}
+                name="kota"
+              >
                 <option defaultValue={"Pilih"}>Pilih Kota</option>
                 {namaKota.map((value) => {
                   return (
@@ -168,15 +193,15 @@ const EditProfileForm = () => {
             <div className="mx-5 mt-4 mb-4">
               <div className="form-group">
                 <textarea
+                  name="address"
                   className="form-control form-background"
-                  id="exampleFormControlTextarea1"
                   rows="5"
                   placeholder="Address"
                 />
               </div>
             </div>
 
-            <div className="mx-5 button-edit-center">
+            <div className="mx-5 mb-5 button-edit-center">
               <Button type="submit" className="button-edit">
                 Submit
               </Button>
