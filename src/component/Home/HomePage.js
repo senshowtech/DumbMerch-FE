@@ -61,6 +61,7 @@ const HomePage = () => {
                   harga={value.price}
                   stok={value.qty}
                   gambar={value.image}
+                  categories={value.categories}
                 />
               );
             })
@@ -73,6 +74,7 @@ const HomePage = () => {
                   harga={value.price}
                   stok={value.qty}
                   gambar={value.image}
+                  categories={value.categories}
                 />
               );
             })}

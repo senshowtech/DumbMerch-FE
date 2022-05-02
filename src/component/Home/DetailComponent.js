@@ -1,38 +1,45 @@
 import React from "react";
-import axios from "axios";
 import "../../assets/css/detail.css";
 import { Link, useLocation } from "react-router-dom";
-import { dataProduk } from "../../dummy/dataProduk";
+import { API } from "../../config/axios";
 import { Form, Button } from "react-bootstrap";
 
 const DetailComponent = () => {
   const { state } = useLocation();
-  let data_detail = dataProduk[state.id];
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [kotaTujuan, setkotaTujuan] = React.useState(0);
   const [layanan, setLayanan] = React.useState([]);
   const [hasilAkhir, sethasilAkhir] = React.useState(0);
   const [stokCount, setstokCount] = React.useState(1);
+  const [product, setProduct] = React.useState(null);
+  const id = state.id;
 
   React.useEffect(() => {
     const getProvince = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/provinsi");
+        const response = await API.get("/provinsi");
         setProvince(response.data.rajaongkir.results);
       } catch (error) {
         console.log(error);
       }
     };
     getProvince();
-  }, []);
+    const getProduct = async () => {
+      try {
+        const response = await API.get("/product/" + id);
+        setProduct(response.data.data.products);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [id]);
 
   const HandleNamaKota = async (e) => {
     const provinsi = e.target.value;
     try {
-      const response = await axios.get(
-        `http://localhost:5000/kota/${provinsi}`
-      );
+      const response = await API.get(`/kota/${provinsi}`);
       setnamaKota(response.data.rajaongkir.results);
     } catch (error) {
       console.log(error);
@@ -48,9 +55,7 @@ const DetailComponent = () => {
     const kurir = e.target.value;
     const kota_tujuan = kotaTujuan;
     try {
-      const response = await axios.get(
-        `http://localhost:5000/ongkos/1/${kota_tujuan}/1/${kurir}`
-      );
+      const response = await API.get(`/ongkos/1/${kota_tujuan}/1/${kurir}`);
       setLayanan(response.data.rajaongkir.results[0].costs);
     } catch (error) {
       console.log(error);
@@ -68,7 +73,7 @@ const DetailComponent = () => {
   };
 
   const Tambah = () => {
-    if (stokCount < data_detail.stok) {
+    if (stokCount < product?.qty) {
       let tambah = stokCount + 1;
       setstokCount(tambah);
     }
@@ -92,16 +97,16 @@ const DetailComponent = () => {
       <div className="row">
         <div className="col-12 col-lg">
           <div className="d-flex justify-content-center justify-content-lg-end h-100 align-items-center">
-            <div className="gambar-detail">
-              <img src={data_detail.gambar} className="img-fluid" alt="..." />
+            <div>
+              <img src={product?.image} className="img-fluid" alt="..." />
             </div>
           </div>
         </div>
         <div className="col-12 col-lg mb-5">
-          <h1 className="judul-produk">{data_detail.nama}</h1>
+          <h1 className="judul-produk">{product?.title}</h1>
           <div className="d-flex justify-content-between">
             <p className="paragrapgh-produk">{`Stock: ${
-              data_detail.stok - parseInt(stokCount)
+              product?.qty - parseInt(stokCount)
             }`}</p>
             <div className="d-flex">
               <Button className="button-kiri-count" onClick={Kurang}>
@@ -121,7 +126,7 @@ const DetailComponent = () => {
               </Button>
             </div>
           </div>
-          <p className="paragrapgh-produk">{data_detail.deskripsi}</p>
+          <p className="paragrapgh-produk">{product?.desc}</p>
           <Form.Select
             onChange={HandleNamaKota}
             name="provinsi"
@@ -170,10 +175,13 @@ const DetailComponent = () => {
               );
             })}
           </Form.Select>
+          <p style={{ color: "white", marginTop: "10px" }}>
+            {"Biaya Pengiriman:" + " " + formatter.format(hasilAkhir)}
+          </p>
           <div className="d-flex justify-content-end">
             <h3 className="judul-produk">
               {formatter.format(
-                data_detail.harga * stokCount + parseInt(hasilAkhir)
+                product?.price * stokCount + parseInt(hasilAkhir)
               )}
             </h3>
           </div>
