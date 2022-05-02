@@ -1,11 +1,13 @@
 import React from "react";
 import "../../assets/css/detail.css";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { API } from "../../config/axios";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const DetailComponent = () => {
   const { state } = useLocation();
+  const navigate = useNavigate();
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [kotaTujuan, setkotaTujuan] = React.useState(0);
@@ -54,8 +56,12 @@ const DetailComponent = () => {
   const Layanan = async (e) => {
     const kurir = e.target.value;
     const kota_tujuan = kotaTujuan;
+    const idKota = product.kurir[0].idkota;
+    const weight = product.kurir[3].weight;
     try {
-      const response = await API.get(`/ongkos/1/${kota_tujuan}/1/${kurir}`);
+      const response = await API.get(
+        `/ongkos/${idKota}/${kota_tujuan}/${weight}/${kurir}`
+      );
       setLayanan(response.data.rajaongkir.results[0].costs);
     } catch (error) {
       console.log(error);
@@ -83,6 +89,28 @@ const DetailComponent = () => {
     if (stokCount > 0) {
       let kurang = stokCount - 1;
       setstokCount(kurang);
+    }
+  };
+
+  const Transaction = async (idSeller, idProduk, price) => {
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      let data = {
+        idProduct: idProduk,
+        idSeller: idSeller,
+        price: price * stokCount + parseInt(hasilAkhir),
+      };
+      const response = await API.post("/transaction", data, config);
+      // console.log(response.status);
+      if (response.status === 201) {
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -185,9 +213,14 @@ const DetailComponent = () => {
               )}
             </h3>
           </div>
-          <Link to="/profile" className="btn button-detail">
+          <Button
+            onClick={() =>
+              Transaction(product.users.id, product.id, product.price)
+            }
+            className="btn button-detail"
+          >
             Buy
-          </Link>
+          </Button>
         </div>
       </div>
     </div>
