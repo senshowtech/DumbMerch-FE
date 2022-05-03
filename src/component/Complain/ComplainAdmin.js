@@ -11,45 +11,53 @@ const ComplainAdmin = () => {
   const [contact, setContact] = React.useState(null);
   const [contacts, setContacts] = React.useState([]);
 
-  const loadContacts = () => {
-    socket.emit("load custommer contacts");
-
-    socket.on("custommer contacts", (data) => {
-      let dataContacts = data.filter((item) => item.status !== "admin");
-
-      dataContacts = dataContacts.map((item) => ({
-        ...item,
-        message: "Click here to start message",
-      }));
-
-      setContacts(dataContacts);
-    });
-  };
-
   React.useEffect(() => {
-    socket = io("http://localhost:5000");
+    socket = io("http://localhost:5000", {
+      auth: {
+        token: localStorage.getItem("token"),
+      },
+    });
+
     loadContacts();
+
+    socket.on("connect_error", (err) => {
+      console.error(err.message);
+    });
+
     return () => {
       socket.disconnect();
     };
   }, []);
 
+  const loadContacts = () => {
+    socket.emit("load custommer contacts");
+
+    socket.on("custommer contacts", (data) => {
+      let dataContacts = data.filter((item) => item.status !== "admin");
+      dataContacts = dataContacts.map((item) => ({
+        ...item,
+        message: "Click here to start message",
+      }));
+      setContacts(dataContacts);
+    });
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-12 col-lg-3 complain-admin-kiri">
-          <CardHeadComplain />
-          <CardHeadComplain />
+          <CardHeadComplain
+            dataContact={contacts}
+            setContact={setContact}
+            contact={contact}
+          />
         </div>
 
         <div className="col-12 col-lg-9">
-          <div className="complain-admin-kanan">
+          {/* <div className="complain-admin-kanan">
             <div className="overflow-auto">
               <CardBottomAtas />
               <CardBottomBawah />
-              <CardBottomAtas />
-              <CardBottomBawah />
-              <CardBottomAtas />
               <div className="mx-5">
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -62,7 +70,7 @@ const ComplainAdmin = () => {
                 </Form>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

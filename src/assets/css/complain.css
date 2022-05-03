@@ -1,3 +1,20 @@
+.contact:hover {
+    background-color: #212121;
+    transition: 0.5s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.contact:active {
+    background-color: #3d3d3d;
+    transition: 0.3s;
+}
+
+.contact-active {
+    background-color: #212121;
+    border-radius: 5px;
+}
+
 @media (min-width: 376px) and (max-width: 991px) {
     .complain-admin-kiri {
         display: none;

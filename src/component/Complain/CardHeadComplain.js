@@ -1,17 +1,35 @@
-const CardHeadComplain = () => {
+const CardHeadComplain = ({ dataContact, setContact, contact }) => {
   return (
-    <div className="d-flex justify-content-center mt-3">
-      <img
-        src={require("../../assets/img/profilepict.png")}
-        className="img-fluid"
-        alt="..."
-      />
-      <div className="d-flex flex-column">
-        <h6 className="mx-3 judul-complain">Admin</h6>
-        <p className="mx-3 paragrapgh-complain" style={{ marginTop: "-5px" }}>
-          Yes, Is there anything I can help
-        </p>
-      </div>
+    <div>
+      {dataContact?.map((value) => {
+        return (
+          <div
+            className={`contact d-flex justify-content-center mt-3 ${
+              contact?.id === value?.id && "contact-active"
+            }`}
+            key={value.id}
+            onClick={() => {
+              setContact(value);
+            }}
+          >
+            <img
+              src={value.profiles.image}
+              className="rounded-circle me-2 mt-2 mb-2"
+              style={{ width: "60px", height: "60px" }}
+              alt="..."
+            />
+            <div className="d-flex flex-column">
+              <h6 className="mx-3 judul-complain mt-3">{value.name}</h6>
+              <p
+                className="mx-3 paragrapgh-complain"
+                style={{ marginTop: "-5px" }}
+              >
+                {value.message}
+              </p>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
