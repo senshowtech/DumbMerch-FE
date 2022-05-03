@@ -1,7 +1,7 @@
 import "../../assets/css/home.css";
 import CardHome from "./CardHome";
 import React from "react";
-import { Form } from "react-bootstrap";
+import { Form, Pagination } from "react-bootstrap";
 import { API } from "../../config/axios";
 
 const HomePage = () => {
@@ -14,6 +14,7 @@ const HomePage = () => {
     total_data: null,
   });
   const [page, setPage] = React.useState(1);
+  const [pages, setPages] = React.useState([]);
 
   React.useEffect(() => {
     const getProduct = async () => {
@@ -29,12 +30,49 @@ const HomePage = () => {
             total_data: response.data.data.total_data,
           };
         });
+        let items = [];
+        for (
+          let number = 1;
+          number <= response.data.data.total_page;
+          number++
+        ) {
+          items.push(number);
+        }
+        setPages(items);
       } catch (error) {
         console.log(error);
       }
     };
     getProduct();
   }, [page]);
+
+  const Paginations = () => {
+    // selalu kurang 3
+    let active = page;
+    return (
+      <div className="d-flex justify-content-center">
+        <Pagination>
+          <Pagination.First />
+          {pages.map((value) => {
+            return (
+              <Pagination.Item
+                key={value}
+                active={value === active}
+                onClick={() => ChangePage(value)}
+              >
+                {value}
+              </Pagination.Item>
+            );
+          })}
+          <Pagination.Last />
+        </Pagination>
+      </div>
+    );
+  };
+
+  const ChangePage = (id) => {
+    setPage(id);
+  };
 
   let data_search = products.product?.filter((value) => {
     return value.title.toLocaleLowerCase().includes(values.toLocaleLowerCase());
@@ -78,6 +116,7 @@ const HomePage = () => {
                 />
               );
             })}
+        {Paginations()}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import "../../assets/css/category.css";
 const Product = () => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
+  const [pages, setPages] = React.useState([]);
   const [idProduk, setidProduk] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [products, setProducts] = React.useState({
@@ -33,6 +34,15 @@ const Product = () => {
             total_data: response.data.data.total_data,
           };
         });
+        let items = [];
+        for (
+          let number = 1;
+          number <= response.data.data.total_page;
+          number++
+        ) {
+          items.push(number);
+        }
+        setPages(items);
       } catch (error) {
         console.log(error);
       }
@@ -72,24 +82,23 @@ const Product = () => {
   };
 
   const Paginations = () => {
+    // selalu kurang 3
     let active = page;
-    let items = [];
-    for (let number = 1; number <= products.total_page; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === active}
-          onClick={() => ChangePage(number)}
-        >
-          {number}
-        </Pagination.Item>
-      );
-    }
     return (
       <div className="d-flex justify-content-center">
         <Pagination>
           <Pagination.First />
-          {items}
+          {pages.map((value) => {
+            return (
+              <Pagination.Item
+                key={value}
+                active={value === active}
+                onClick={() => ChangePage(value)}
+              >
+                {value}
+              </Pagination.Item>
+            );
+          })}
           <Pagination.Last />
         </Pagination>
       </div>
