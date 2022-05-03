@@ -1,10 +1,39 @@
+import React from "react";
 import "../../assets/css/complain.css";
 import { Form } from "react-bootstrap";
 import CardHeadComplain from "./CardHeadComplain";
 import CardBottomAtas from "./CardBottomAtas";
 import CardBottomBawah from "./CardBottomBawah";
+import { io } from "socket.io-client";
+let socket;
 
 const ComplainAdmin = () => {
+  const [contact, setContact] = React.useState(null);
+  const [contacts, setContacts] = React.useState([]);
+
+  const loadContacts = () => {
+    socket.emit("load custommer contacts");
+
+    socket.on("custommer contacts", (data) => {
+      let dataContacts = data.filter((item) => item.status !== "admin");
+
+      dataContacts = dataContacts.map((item) => ({
+        ...item,
+        message: "Click here to start message",
+      }));
+
+      setContacts(dataContacts);
+    });
+  };
+
+  React.useEffect(() => {
+    socket = io("http://localhost:5000");
+    loadContacts();
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="row">
