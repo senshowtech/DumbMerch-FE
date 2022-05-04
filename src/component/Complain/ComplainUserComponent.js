@@ -28,15 +28,12 @@ const ComplainUserComponent = () => {
     });
 
     socket.on("new message", () => {
-      // console.log("contact", contact);
-      // console.log("triggered", contact?.id);
       socket.emit("load messages", contact?.id);
     });
 
     socket.on("connect_error", (err) => {
-      console.error(err.message); // not authorized
+      console.error(err.message);
     });
-    // code here
     loadContact();
     loadMessages();
 
@@ -46,10 +43,7 @@ const ComplainUserComponent = () => {
   }, [messages]);
 
   const loadContact = () => {
-    // emit event load admin contact
     socket.emit("load admin contact");
-    // listen event to get admin contact
-
     socket.on("admin contact", async (data) => {
       const dataContact = {
         ...data,
@@ -62,14 +56,6 @@ const ComplainUserComponent = () => {
     });
   };
 
-  // used for active style when click contact
-  const onClickContact = (data) => {
-    setContact(data);
-    // code here
-    socket.emit("load messages", data.id);
-  };
-
-  // code here
   const loadMessages = (value) => {
     socket.on("admin contact", (data) => {
       socket.on("messages", async (data) => {
@@ -78,13 +64,17 @@ const ComplainUserComponent = () => {
             idSender: item.sender.id,
             message: item.message,
           }));
-          console.log(dataMessages);
           setMessages(dataMessages);
         }
         const chatMessages = document.getElementById("chat-messages");
         chatMessages.scrollTop = chatMessages?.scrollHeight;
       });
     });
+  };
+
+  const onClickContact = (data) => {
+    setContact(data);
+    socket.emit("load messages", data.id);
   };
 
   const onSendMessage = (e) => {

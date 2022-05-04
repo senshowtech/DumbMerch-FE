@@ -12,8 +12,6 @@ const ComplainAdmin = () => {
   const [messages, setMessages] = React.useState([]);
   const [state, dispatch] = React.useContext(UserContext);
 
-  // console.log(state.user.user?.id);
-
   React.useEffect(() => {
     socket = io("http://localhost:5000", {
       auth: {
@@ -25,8 +23,6 @@ const ComplainAdmin = () => {
     });
 
     socket.on("new message", () => {
-      // console.log("contact", contact);
-      // console.log("triggered", contact?.id);
       socket.emit("load messages", contact?.id);
     });
 
@@ -62,11 +58,6 @@ const ComplainAdmin = () => {
     });
   };
 
-  const onClickContact = (data) => {
-    setContact(data);
-    socket.emit("load messages", data.id);
-  };
-
   const loadMessages = (value) => {
     socket.on("messages", (data) => {
       if (data.length > 0) {
@@ -80,6 +71,11 @@ const ComplainAdmin = () => {
       const chatMessages = document.getElementById("chat-messages");
       chatMessages.scrollTop = chatMessages?.scrollHeight;
     });
+  };
+
+  const onClickContact = (data) => {
+    setContact(data);
+    socket.emit("load messages", data.id);
   };
 
   const onSendMessage = (e) => {
