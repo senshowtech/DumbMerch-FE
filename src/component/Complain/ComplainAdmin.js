@@ -1,20 +1,25 @@
 import React from "react";
 import "../../assets/css/complain.css";
 import { Form } from "react-bootstrap";
+import { UserContext } from "../../context/userContext";
 import CardHeadComplain from "./CardHeadComplain";
-import CardBottomAtas from "./CardBottomAtas";
-import CardBottomBawah from "./CardBottomBawah";
 import { io } from "socket.io-client";
 let socket;
 
 const ComplainAdmin = () => {
   const [contact, setContact] = React.useState(null);
   const [contacts, setContacts] = React.useState([]);
+  const [state, dispatch] = React.useContext(UserContext);
+
+  // console.log(state.user.user?.id);
 
   React.useEffect(() => {
     socket = io("http://localhost:5000", {
       auth: {
         token: localStorage.getItem("token"),
+      },
+      query: {
+        id: state.user.user?.id,
       },
     });
 
@@ -53,25 +58,7 @@ const ComplainAdmin = () => {
           />
         </div>
 
-        <div className="col-12 col-lg-9">
-          {/* <div className="complain-admin-kanan">
-            <div className="overflow-auto">
-              <CardBottomAtas />
-              <CardBottomBawah />
-              <div className="mx-5">
-                <Form>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control
-                      type="text"
-                      placeholder="Send Message"
-                      className="form-complain"
-                    />
-                  </Form.Group>
-                </Form>
-              </div>
-            </div>
-          </div> */}
-        </div>
+        <div className="col-12 col-lg-9"></div>
       </div>
     </div>
   );

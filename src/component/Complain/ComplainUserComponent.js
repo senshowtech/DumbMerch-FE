@@ -2,8 +2,6 @@ import React from "react";
 import "../../assets/css/complain.css";
 import { Form } from "react-bootstrap";
 import CardHeadComplain from "./CardHeadComplain";
-import CardBottomAtas from "./CardBottomAtas";
-import CardBottomBawah from "./CardBottomBawah";
 import { io } from "socket.io-client";
 
 let socket;
@@ -14,7 +12,6 @@ const ComplainUserComponent = () => {
 
   React.useEffect(() => {
     socket = io("http://localhost:5000", {
-      // code here
       auth: {
         token: localStorage.getItem("token"),
       },
@@ -54,28 +51,7 @@ const ComplainUserComponent = () => {
           />
         </div>
 
-        <div className="col-12 col-lg-9">
-          {/* <div className="complain-admin-kanan">
-            <div className="overflow-auto">
-              <CardBottomAtas />
-              <CardBottomBawah />
-              <CardBottomAtas />
-              <CardBottomBawah />
-              <CardBottomAtas />
-              <div className="mx-5">
-                <Form>
-                  <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Control
-                      type="text"
-                      placeholder="Send Message"
-                      className="form-complain"
-                    />
-                  </Form.Group>
-                </Form>
-              </div>
-            </div>
-          </div> */}
-        </div>
+        <div className="col-12 col-lg-9"></div>
       </div>
     </div>
   );

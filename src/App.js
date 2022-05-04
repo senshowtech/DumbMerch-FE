@@ -1,8 +1,8 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import { setAuthToken } from "./config/axios";
 import { useContext } from "react";
 import { UserContext } from "./context/userContext";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { setAuthToken, API } from "./config/axios";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/main.css";
@@ -35,6 +35,7 @@ const App = () => {
   const [state, dispatch] = useContext(UserContext);
 
   // Ngecek Auth jika di reload
+  // set dispatch jika di reload
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
@@ -44,6 +45,31 @@ const App = () => {
       setAuthToken(localStorage.token);
     }
   }, [state]);
+
+  React.useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const response = await API.get("/check/auth");
+        if (response.status === "failed") {
+          return dispatch({
+            type: "AUTH_ERROR",
+          });
+        }
+        let data = response.data.data;
+        dispatch({
+          type: "USER_SUCCESS",
+          payload: {
+            user: data,
+            isAdmin: localStorage.isAdmin,
+            token: localStorage.token,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    checkUser();
+  }, []);
 
   return (
     <BrowserRouter>
