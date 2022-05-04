@@ -1,4 +1,4 @@
-const CardHeadComplain = ({ dataContact, setContact, contact }) => {
+const Contact = ({ dataContact, clickContact, contact }) => {
   return (
     <div>
       {dataContact?.map((value) => {
@@ -9,7 +9,7 @@ const CardHeadComplain = ({ dataContact, setContact, contact }) => {
             }`}
             key={value.id}
             onClick={() => {
-              setContact(value);
+              clickContact(value);
             }}
           >
             <img
@@ -33,4 +33,4 @@ const CardHeadComplain = ({ dataContact, setContact, contact }) => {
     </div>
   );
 };
-export default CardHeadComplain;
+export default Contact;
