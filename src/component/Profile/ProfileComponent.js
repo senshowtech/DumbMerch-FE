@@ -62,7 +62,6 @@ const ProfileComponent = () => {
         <div className="col-12 col-lg-5">
           <h5 className="judul-produk">My Transaction</h5>
           {transactions?.map((value) => {
-            console.log(value);
             return (
               <div
                 key={value.id}

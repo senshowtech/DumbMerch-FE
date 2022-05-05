@@ -38,6 +38,20 @@ const DetailComponent = () => {
     getProduct();
   }, [id]);
 
+  React.useEffect(() => {
+    const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
+    const myMidtransClientKey = "Mid-server-zI3gLYVu6v9Y-3eoCVfSFEmq";
+
+    let scriptTag = document.createElement("script");
+    scriptTag.src = midtransScriptUrl;
+    scriptTag.setAttribute("data-client-key", myMidtransClientKey);
+
+    document.body.appendChild(scriptTag);
+    return () => {
+      document.body.removeChild(scriptTag);
+    };
+  }, []);
+
   const HandleNamaKota = async (e) => {
     const provinsi = e.target.value;
     try {
@@ -105,7 +119,23 @@ const DetailComponent = () => {
         price: price * stokCount + parseInt(hasilAkhir),
       };
       const response = await API.post("/transaction", data, config);
-      // console.log(response.status);
+      const token = response.data.data.transaction.payment.token;
+      window.snap.pay(token, {
+        onSuccess: function (result) {
+          console.log(result);
+          navigate("/profile");
+        },
+        onPending: function (result) {
+          console.log(result);
+          navigate("/profile");
+        },
+        onError: function (result) {
+          console.log(result);
+        },
+        onClose: function () {
+          alert("you closed the popup without finishing the payment");
+        },
+      });
       if (response.status === 201) {
         navigate("/profile");
       }
@@ -126,7 +156,12 @@ const DetailComponent = () => {
         <div className="col-12 col-lg">
           <div className="d-flex justify-content-center justify-content-lg-end h-100 align-items-center">
             <div>
-              <img src={product?.image} className="img-fluid" alt="..." />
+              <img
+                style={{ width: "450px", height: "500px" }}
+                src={product?.image}
+                className="img-fluid"
+                alt="..."
+              />
             </div>
           </div>
         </div>
