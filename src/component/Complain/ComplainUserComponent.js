@@ -34,6 +34,7 @@ const ComplainUserComponent = () => {
     socket.on("connect_error", (err) => {
       console.error(err.message);
     });
+
     loadContact();
     loadMessages();
 
