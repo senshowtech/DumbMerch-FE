@@ -87,6 +87,12 @@ const ProfileComponent = () => {
                   <p className="paragrapgh-samping-profile fw-bold">
                     Sub Total: {formatter.format(value.price)}
                   </p>
+                  <p
+                    className="paragrapgh-samping-profile fw-bold"
+                    style={{ marginTop: "-12px" }}
+                  >
+                    Status: {value.status}
+                  </p>
                 </div>
                 <div className="icon-samping">
                   <svg
