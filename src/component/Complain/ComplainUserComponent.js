@@ -23,20 +23,16 @@ const ComplainUserComponent = () => {
       },
     });
 
-    socket.on("connect_error", (err) => {
-      console.error(err.message);
-    });
-
     socket.on("new message", () => {
       socket.emit("load messages", contact?.id);
     });
 
+    loadContact();
+    loadMessages();
+
     socket.on("connect_error", (err) => {
       console.error(err.message);
     });
-
-    loadContact();
-    loadMessages();
 
     return () => {
       socket.disconnect();
