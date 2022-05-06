@@ -100,7 +100,7 @@ const ComplainAdmin = () => {
           />
         </div>
 
-        <div className="col-12 col-lg-9">
+        <div className="col-12 col-lg-9 complain-admin-kanan">
           <Chat
             contact={contact}
             messages={messages}

@@ -74,15 +74,17 @@ const ComplainUserComponent = () => {
     socket.emit("load messages", data.id);
   };
 
+  console.log(contact);
+
   const onSendMessage = (e) => {
     if (e.key === "Enter") {
       const data = {
         idRecipient: contact.id,
         message: e.target.value,
       };
-
       socket.emit("send messages", data);
       e.target.value = "";
+      socket.emit("load messages", contact.id);
     }
   };
 
