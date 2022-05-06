@@ -29,7 +29,6 @@ import ComplainUserPage from "./pages/Complain/ComplainUserPage";
 
 import PrivateRoute from "./component/PrivateRoute";
 import NotFound from "./component/404NotFound";
-import OngkirPage from "./pages/OngkirPage";
 
 const App = () => {
   const [state, dispatch] = useContext(UserContext);
@@ -78,7 +77,6 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/ongkir" element={<OngkirPage />} />
         <Route element={<PrivateRoute />}>
           {/* User */}
           <Route path="/" element={<Home />} />

@@ -1,4 +1,5 @@
 import React from "react";
+import Paginations from "../Pagination";
 import { Table, Button, Modal, Pagination } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../config/axios";
@@ -7,7 +8,6 @@ import "../../assets/css/category.css";
 const Product = () => {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
-  const [pages, setPages] = React.useState([]);
   const [idProduk, setidProduk] = React.useState(null);
   const [page, setPage] = React.useState(1);
   const [products, setProducts] = React.useState({
@@ -72,62 +72,6 @@ const Product = () => {
     }
   };
 
-  const Paginations = () => {
-    let items = [];
-    let totalPage = products.total_page;
-    let currentPage = products.current_page;
-    if (totalPage <= 5) {
-      for (let number = 1; number <= totalPage; number++) {
-        items.push(number);
-      }
-    } else if (
-      totalPage > 5 &&
-      currentPage <= 3 &&
-      totalPage - currentPage > 2
-    ) {
-      items = ["1", "2", "3", "4", "...", totalPage];
-    } else if (
-      totalPage > 5 &&
-      currentPage > 3 &&
-      totalPage - currentPage > 2
-    ) {
-      items = [currentPage - 1, currentPage, currentPage + 1, "...", totalPage];
-    } else if (
-      totalPage > 5 &&
-      currentPage > 3 &&
-      totalPage - currentPage <= 2
-    ) {
-      items = [
-        "1",
-        "...",
-        totalPage - 3,
-        totalPage - 2,
-        totalPage - 1,
-        totalPage,
-      ];
-    }
-    let active = page;
-    return (
-      <div className="d-flex justify-content-center">
-        <Pagination>
-          <Pagination.First />
-          {items.map((value) => {
-            return (
-              <Pagination.Item
-                key={value}
-                active={value === active}
-                onClick={() => ChangePage(value)}
-              >
-                {value}
-              </Pagination.Item>
-            );
-          })}
-          <Pagination.Last />
-        </Pagination>
-      </div>
-    );
-  };
-
   const ChangePage = (id) => {
     setPage(id);
   };
@@ -180,6 +124,10 @@ const Product = () => {
                         }}
                       >
                         <img
+                          style={{
+                            maxWidth: "80px",
+                            maxHeight: "80px",
+                          }}
                           src={value.image}
                           className="img-fluid "
                           alt="..."
@@ -230,7 +178,12 @@ const Product = () => {
               </Modal.Footer>
             </Modal>
           </Table>
-          {Paginations()}
+          <Paginations
+            products={products}
+            ChangePage={ChangePage}
+            page={page}
+            Pagination={Pagination}
+          />
         </div>
       </div>
     </div>

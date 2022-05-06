@@ -1,5 +1,6 @@
 import "../../assets/css/home.css";
 import CardHome from "./CardHome";
+import Paginations from "../Pagination";
 import React from "react";
 import { Form, Pagination } from "react-bootstrap";
 import { API } from "../../config/axios";
@@ -14,7 +15,6 @@ const HomePage = () => {
     total_data: null,
   });
   const [page, setPage] = React.useState(1);
-  const [pages, setPages] = React.useState([]);
 
   React.useEffect(() => {
     const getProduct = async () => {
@@ -37,63 +37,6 @@ const HomePage = () => {
     getProduct();
   }, [page]);
 
-  const Paginations = () => {
-    // selalu kurang 3
-    let items = [];
-    let totalPage = products.total_page;
-    let currentPage = products.current_page;
-    if (totalPage <= 5) {
-      for (let number = 1; number <= totalPage; number++) {
-        items.push(number);
-      }
-    } else if (
-      totalPage > 5 &&
-      currentPage <= 3 &&
-      totalPage - currentPage > 2
-    ) {
-      items = ["1", "2", "3", "4", "...", totalPage];
-    } else if (
-      totalPage > 5 &&
-      currentPage > 3 &&
-      totalPage - currentPage > 2
-    ) {
-      items = [currentPage - 1, currentPage, currentPage + 1, "...", totalPage];
-    } else if (
-      totalPage > 5 &&
-      currentPage > 3 &&
-      totalPage - currentPage <= 2
-    ) {
-      items = [
-        "1",
-        "...",
-        totalPage - 3,
-        totalPage - 2,
-        totalPage - 1,
-        totalPage,
-      ];
-    }
-    let active = page;
-    return (
-      <div className="d-flex justify-content-center">
-        <Pagination>
-          <Pagination.First />
-          {items.map((value) => {
-            return (
-              <Pagination.Item
-                key={value}
-                active={value === active}
-                onClick={() => ChangePage(value)}
-              >
-                {value}
-              </Pagination.Item>
-            );
-          })}
-          <Pagination.Last />
-        </Pagination>
-      </div>
-    );
-  };
-
   const ChangePage = (id) => {
     setPage(id);
   };
@@ -105,42 +48,52 @@ const HomePage = () => {
   return (
     <div className="container">
       <h5 className="judul-produk">Product</h5>
-      <Form.Control
-        values={values}
-        onChange={(e) => setValues(e.target.value)}
-        type="text"
-        placeholder="Search By Nama Produk"
-        className="form-search"
-      />
+      {data_search?.length === 0 ? (
+        ""
+      ) : (
+        <Form.Control
+          values={values}
+          onChange={(e) => setValues(e.target.value)}
+          type="text"
+          placeholder="Search By Nama Produk"
+          className="form-search"
+        />
+      )}
       <div className="row">
-        {data_search?.length === 1
-          ? products.product?.map((value) => {
-              return (
-                <CardHome
-                  key={value.id}
-                  id={value.id}
-                  nama={value.title}
-                  harga={value.price}
-                  stok={value.qty}
-                  gambar={value.image}
-                  categories={value.categories}
-                />
-              );
-            })
-          : data_search?.map((value) => {
-              return (
-                <CardHome
-                  key={value.id}
-                  id={value.id}
-                  nama={value.title}
-                  harga={value.price}
-                  stok={value.qty}
-                  gambar={value.image}
-                  categories={value.categories}
-                />
-              );
-            })}
-        {Paginations()}
+        {data_search?.length === 0 ? (
+          <div>
+            <h5
+              style={{ color: "white", marginTop: "50px" }}
+              className="text-center"
+            >
+              Data Not Found
+            </h5>
+          </div>
+        ) : (
+          data_search?.map((value) => {
+            return (
+              <CardHome
+                key={value.id}
+                id={value.id}
+                nama={value.title}
+                harga={value.price}
+                stok={value.qty}
+                gambar={value.image}
+                categories={value.categories}
+              />
+            );
+          })
+        )}
+        {data_search?.length === 0 ? (
+          ""
+        ) : (
+          <Paginations
+            products={products}
+            ChangePage={ChangePage}
+            page={page}
+            Pagination={Pagination}
+          />
+        )}
       </div>
     </div>
   );
