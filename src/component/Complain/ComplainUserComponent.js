@@ -53,19 +53,17 @@ const ComplainUserComponent = () => {
     });
   };
 
-  const loadMessages = (value) => {
-    socket.on("admin contact", (data) => {
-      socket.on("messages", async (data) => {
-        if (data.length > 0) {
-          const dataMessages = data.map((item) => ({
-            idSender: item.sender.id,
-            message: item.message,
-          }));
-          setMessages(dataMessages);
-        }
-        const chatMessages = document.getElementById("chat-messages");
-        chatMessages.scrollTop = chatMessages?.scrollHeight;
-      });
+  const loadMessages = () => {
+    socket.on("messages", async (data) => {
+      if (data.length > 0) {
+        const dataMessages = data.map((item) => ({
+          idSender: item.sender.id,
+          message: item.message,
+        }));
+        setMessages(dataMessages);
+      }
+      const chatMessages = document.getElementById("chat-messages");
+      chatMessages.scrollTop = chatMessages?.scrollHeight;
     });
   };
 
@@ -73,8 +71,6 @@ const ComplainUserComponent = () => {
     setContact(data);
     socket.emit("load messages", data.id);
   };
-
-  console.log(contact);
 
   const onSendMessage = (e) => {
     if (e.key === "Enter") {
@@ -84,7 +80,6 @@ const ComplainUserComponent = () => {
       };
       socket.emit("send messages", data);
       e.target.value = "";
-      socket.emit("load messages", contact.id);
     }
   };
 

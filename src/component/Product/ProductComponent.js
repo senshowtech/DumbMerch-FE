@@ -34,15 +34,6 @@ const Product = () => {
             total_data: response.data.data.total_data,
           };
         });
-        let items = [];
-        for (
-          let number = 1;
-          number <= response.data.data.total_page;
-          number++
-        ) {
-          items.push(number);
-        }
-        setPages(items);
       } catch (error) {
         console.log(error);
       }
@@ -82,13 +73,45 @@ const Product = () => {
   };
 
   const Paginations = () => {
-    // selalu kurang 3
+    let items = [];
+    let totalPage = products.total_page;
+    let currentPage = products.current_page;
+    if (totalPage <= 5) {
+      for (let number = 1; number <= totalPage; number++) {
+        items.push(number);
+      }
+    } else if (
+      totalPage > 5 &&
+      currentPage <= 3 &&
+      totalPage - currentPage > 2
+    ) {
+      items = ["1", "2", "3", "4", "...", totalPage];
+    } else if (
+      totalPage > 5 &&
+      currentPage > 3 &&
+      totalPage - currentPage > 2
+    ) {
+      items = [currentPage - 1, currentPage, currentPage + 1, "...", totalPage];
+    } else if (
+      totalPage > 5 &&
+      currentPage > 3 &&
+      totalPage - currentPage <= 2
+    ) {
+      items = [
+        "1",
+        "...",
+        totalPage - 3,
+        totalPage - 2,
+        totalPage - 1,
+        totalPage,
+      ];
+    }
     let active = page;
     return (
       <div className="d-flex justify-content-center">
         <Pagination>
           <Pagination.First />
-          {pages.map((value) => {
+          {items.map((value) => {
             return (
               <Pagination.Item
                 key={value}

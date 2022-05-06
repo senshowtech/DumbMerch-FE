@@ -58,7 +58,7 @@ const ComplainAdmin = () => {
     });
   };
 
-  const loadMessages = (value) => {
+  const loadMessages = () => {
     socket.on("messages", (data) => {
       if (data.length > 0) {
         const dataMessages = data.map((item) => ({
