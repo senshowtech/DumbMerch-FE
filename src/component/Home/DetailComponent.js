@@ -1,13 +1,14 @@
 import React from "react";
 import "../../assets/css/detail.css";
-import { useLocation } from "react-router-dom";
 import { API } from "../../config/axios";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 const DetailComponent = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [states, dispatch] = React.useContext(UserContext);
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [kotaTujuan, setkotaTujuan] = React.useState(0);
@@ -123,10 +124,24 @@ const DetailComponent = () => {
       window.snap.pay(token, {
         onSuccess: function (result) {
           console.log(result);
+          dispatch({
+            type: "SUCCESS_PAYMENT",
+            payload: {
+              ...states,
+              statusPayment: "success",
+            },
+          });
           navigate("/profile");
         },
         onPending: function (result) {
           console.log(result);
+          dispatch({
+            type: "SUCCESS_PAYMENT",
+            payload: {
+              ...states,
+              statusPayment: "pendings",
+            },
+          });
           navigate("/profile");
         },
         onError: function (result) {

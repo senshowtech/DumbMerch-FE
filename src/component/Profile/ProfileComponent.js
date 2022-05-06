@@ -1,11 +1,12 @@
 import React from "react";
 import "../../assets/css/profile.css";
 import { API } from "../../config/axios";
+import { UserContext } from "../../context/userContext";
 
 const ProfileComponent = () => {
   const [user, setUser] = React.useState([]);
   const [transactions, setTransactions] = React.useState([]);
-
+  const [states, dispatch] = React.useContext(UserContext);
   React.useEffect(() => {
     const getUser = async () => {
       try {
@@ -25,7 +26,9 @@ const ProfileComponent = () => {
       }
     };
     getTransaction();
-  }, []);
+  }, [states]);
+
+  console.log(states);
 
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",

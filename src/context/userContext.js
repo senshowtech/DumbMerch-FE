@@ -4,6 +4,7 @@ export const UserContext = createContext();
 
 const initialState = {
   isAdmin: false,
+  statusPayment: "pending",
   token: "",
   user: {},
 };
@@ -24,6 +25,11 @@ const reducer = (state, action) => {
     case "LOGOUT":
       localStorage.removeItem("token");
       localStorage.removeItem("isAdmin");
+      return {
+        ...state,
+        ...payload,
+      };
+    case "SUCCESS_PAYMENT":
       return {
         ...state,
         ...payload,
