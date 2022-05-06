@@ -28,14 +28,12 @@ const ProfileComponent = () => {
     getTransaction();
   }, [states]);
 
-  console.log(states);
-
   let formatter = new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     maximumFractionDigits: 0,
   });
-  // console.log(transactions);
+
   return (
     <div className="container-fluid">
       <div className="row">
