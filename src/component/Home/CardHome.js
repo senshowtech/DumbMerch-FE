@@ -22,7 +22,7 @@ const CardHome = ({ id, nama, harga, stok, gambar, categories }) => {
   return (
     <div className="col-6 col-md-3 col-lg-3 mt-3">
       <Card className="box-product" onClick={() => DetailCard(id)}>
-        <Card.Img variant="top" src={gambar} style={{ height: "320px" }} />
+        <Card.Img variant="top" src={gambar} style={{ height: "250px" }} />
         <Card.Body>
           <h6 className="judul-produk">{nama}</h6>
           <Card.Text className="paragrapgh-produk">

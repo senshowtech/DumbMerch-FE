@@ -162,7 +162,6 @@ const Product = () => {
                 );
               })}
             </tbody>
-
             <Modal show={show} onHide={handleClose}>
               <Modal.Body>
                 <h3>Delete Data</h3>

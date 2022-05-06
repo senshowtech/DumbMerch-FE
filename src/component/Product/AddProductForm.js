@@ -58,8 +58,6 @@ const AddProductForm = () => {
   const handleChangeImage = (e) => {
     if (e.target.type === "file") {
       image.current = e.target.files[0];
-    }
-    if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
       setPreview(url);
     }

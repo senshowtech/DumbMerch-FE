@@ -69,11 +69,9 @@ const EditProductForm = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChangeImage = (e) => {
     if (e.target.type === "file") {
       image.current = e.target.files[0];
-    }
-    if (e.target.type === "file") {
       let url = URL.createObjectURL(e.target.files[0]);
       setPreview(url);
     }
@@ -162,7 +160,7 @@ const EditProductForm = () => {
                 name="image"
                 style={{ display: "none" }}
                 id="contained-button-file"
-                onChange={handleChange}
+                onChange={handleChangeImage}
               />
               <label htmlFor="contained-button-file">
                 <div className="d-flex justify-content-center align-items-center upload-buttons text-center">

@@ -14,6 +14,7 @@ const HomePage = () => {
     last_page: null,
     total_data: null,
   });
+  const [categories, setCategories] = React.useState([]);
   const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
@@ -35,6 +36,17 @@ const HomePage = () => {
       }
     };
     getProduct();
+    const getCategories = async () => {
+      try {
+        const response = await API.get("/categories");
+        if (response.status === 201) {
+          setCategories(response.data.data.categories);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getCategories();
   }, [page]);
 
   const ChangePage = (id) => {
@@ -42,15 +54,29 @@ const HomePage = () => {
   };
 
   let data_search = products.product?.filter((value) => {
-    return value.title.toLocaleLowerCase().includes(values.toLocaleLowerCase());
+    if (value.categories.length !== 0) {
+      for (let index in value.categories) {
+        return (
+          value.title
+            .toLocaleLowerCase()
+            .includes(values.toLocaleLowerCase()) ||
+          value.categories[index].name
+            .toLocaleLowerCase()
+            .includes(values.toLocaleLowerCase())
+        );
+      }
+    } else {
+      return value.title
+        .toLocaleLowerCase()
+        .includes(values.toLocaleLowerCase());
+    }
   });
 
   return (
     <div className="container">
       <h5 className="judul-produk">Product</h5>
-      {data_search?.length === 0 ? (
-        ""
-      ) : (
+
+      <div className="d-flex justify-content-between">
         <Form.Control
           values={values}
           onChange={(e) => setValues(e.target.value)}
@@ -58,7 +84,24 @@ const HomePage = () => {
           placeholder="Search By Nama Produk"
           className="form-search"
         />
-      )}
+        <div style={{ width: "250px" }}>
+          <Form.Select
+            onChange={(e) => setValues(e.target.value)}
+            aria-label="Default select example"
+            className="form-background"
+          >
+            <option value="">Pilih Category</option>
+            {categories.map((value) => {
+              return (
+                <option key={value.id} value={value.name}>
+                  {value.name}
+                </option>
+              );
+            })}
+          </Form.Select>
+        </div>
+      </div>
+
       <div className="row">
         {data_search?.length === 0 ? (
           <div>
@@ -84,15 +127,15 @@ const HomePage = () => {
             );
           })
         )}
-        {data_search?.length === 0 ? (
-          ""
-        ) : (
+        {data_search?.length !== 0 && values === "" ? (
           <Paginations
             products={products}
             ChangePage={ChangePage}
             page={page}
             Pagination={Pagination}
           />
+        ) : (
+          ""
         )}
       </div>
     </div>
