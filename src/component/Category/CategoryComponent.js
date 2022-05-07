@@ -55,7 +55,11 @@ const Category = () => {
           <Link
             to="/add-category"
             className="btn btn-primary"
-            style={{ width: "100px" }}
+            style={{
+              width: "100px",
+              backgroundColor: "#2c3034",
+              borderColor: "#2c3034",
+            }}
           >
             Add
           </Link>
