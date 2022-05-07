@@ -131,7 +131,7 @@ const HomePage = () => {
             </h5>
           </div>
         ) : data_search?.length !== 0 && values === "" ? (
-          products.product.map((value) => {
+          products.product?.map((value) => {
             return (
               <CardHome
                 key={value.id}

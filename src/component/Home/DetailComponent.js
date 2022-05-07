@@ -122,18 +122,33 @@ const DetailComponent = () => {
       const response = await API.post("/transaction", data, config);
       const token = response.data.data.transaction.payment.token;
       window.snap.pay(token, {
-        onSuccess: function (result) {
-          console.log(result);
-          dispatch({
-            type: "SUCCESS_PAYMENT",
-            payload: {
-              ...states,
-              statusPayment: "success",
-            },
-          });
-          navigate("/profile");
+        onSuccess: async (result) => {
+          try {
+            console.log(result);
+            dispatch({
+              type: "SUCCESS_PAYMENT",
+              payload: {
+                ...states,
+                statusPayment: "success",
+              },
+            });
+            const config = {
+              headers: {
+                "Content-type": "application/json",
+              },
+            };
+            const data = {
+              qty: product?.qty - parseInt(stokCount),
+            };
+            const response = await API.patch(`/stock/${id}`, data, config);
+            if (response.status === 201) {
+              navigate("/profile");
+            }
+          } catch (error) {
+            console.log(error);
+          }
         },
-        onPending: function (result) {
+        onPending: (result) => {
           console.log(result);
           dispatch({
             type: "SUCCESS_PAYMENT",
@@ -144,10 +159,10 @@ const DetailComponent = () => {
           });
           navigate("/profile");
         },
-        onError: function (result) {
+        onError: (result) => {
           console.log(result);
         },
-        onClose: function () {
+        onClose: () => {
           alert("you closed the popup without finishing the payment");
         },
       });
