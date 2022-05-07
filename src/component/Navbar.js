@@ -94,9 +94,11 @@ const Navbars = () => {
             <Nav>
               <Nav.Link
                 as={Link}
-                to="/"
+                to="/user"
                 className={
-                  final_url === "/" ? "nav-active-color" : "nav-inactive-color"
+                  final_url === "/user"
+                    ? "nav-active-color"
+                    : "nav-inactive-color"
                 }
               >
                 Home

@@ -18,6 +18,7 @@ import AddCategoryPage from "./pages/Category/AddCategoryPage";
 import ProfilePage from "./pages/Profile/ProfilePage";
 // home
 import Home from "./pages/Home/Home";
+import HomeUser from "./pages/Home/HomeUser";
 import DetailPage from "./pages/Home/DetailPage";
 // auth
 import Login from "./pages/Auth/Login";
@@ -73,13 +74,14 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
         <Route path="/edit-profile" element={<EditProfilePage />} />
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
           {/* User */}
-          <Route path="/" element={<Home />} />
+          <Route path="/user" element={<HomeUser />} />
           <Route path="/detail-page" element={<DetailPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/complain-admin" element={<ComplainAdminPage />} />

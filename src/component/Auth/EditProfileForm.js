@@ -8,7 +8,10 @@ const EditProfileForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
-  const [city, setCity] = React.useState(null);
+  const [city, setCity] = React.useState({
+    city: null,
+    provinsi: null,
+  });
   const [error, setError] = React.useState("");
   const image = React.useRef(null);
   const navigate = useNavigate();
@@ -27,6 +30,12 @@ const EditProfileForm = () => {
 
   const HandleNamaKota = async (e) => {
     const provinsi = e.target.value.split(",");
+    setCity((prevdata) => {
+      return {
+        ...prevdata,
+        provinsi: `${provinsi}`,
+      };
+    });
     try {
       const response = await API.get(`/kota/${provinsi[0]}`);
       setnamaKota(response.data.rajaongkir.results);
@@ -47,7 +56,12 @@ const EditProfileForm = () => {
 
   const CityHandler = (e) => {
     let city = e.target.value;
-    setCity(city);
+    setCity((prevdata) => {
+      return {
+        ...prevdata,
+        city: city,
+      };
+    });
   };
 
   const RenderAlert = () => {
@@ -75,17 +89,19 @@ const EditProfileForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
+      console.log(city);
+      console.log(province);
       const formData = new FormData();
       formData.set("image", image.current, image.current.name);
       formData.set("phone", e.target.phone.value);
       formData.set("address", e.target.address.value);
-      formData.set("city", city);
+      formData.set("city", JSON.stringify(city));
       const response = await API.patch("/profile", formData, config);
       if (response.status === 201) {
         const response_user = await API.get("/users");
         let status = response_user.data.data.users.status;
         if (status === "user") {
-          navigate("/");
+          navigate("/user");
         } else {
           navigate("/product");
         }

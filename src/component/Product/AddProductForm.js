@@ -9,11 +9,13 @@ import Select from "react-select";
 const AddProductForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
-  const [category, setCategory] = React.useState([]);
-  const [categories, setCategories] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
   const [error, setError] = React.useState("");
   const image = React.useRef(null);
+  const city = React.useRef(null);
+  const category = React.useRef([]);
+  const categories = React.useRef([]);
+
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -37,13 +39,23 @@ const AddProductForm = () => {
               label: value.name,
             };
           });
-          setCategories(data_categories_baru);
+          categories.current = data_categories_baru;
         }
       } catch (error) {
         console.log(error);
       }
     };
     getCategories();
+    const getUser = async () => {
+      try {
+        const response = await API.get("/users/");
+        console.log(response.data.data.users);
+        city.current = JSON.parse(response.data.data.users.profiles.city);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
   }, []);
 
   const HandleNamaKota = async (e) => {
@@ -65,7 +77,7 @@ const AddProductForm = () => {
   };
 
   const handleChangeCategory = (e) => {
-    setCategory(e);
+    category.current = e;
   };
 
   const HandleSubmit = async (e) => {
@@ -77,7 +89,7 @@ const AddProductForm = () => {
         },
       };
       let data_value_category = [];
-      category.forEach((value) => {
+      category.current.forEach((value) => {
         data_value_category.push(value.value);
       });
       let kota = e.target.kota.value.split(",");
@@ -218,7 +230,7 @@ const AddProductForm = () => {
 
             <div className="mx-5 mb-3">
               <Select
-                options={categories}
+                options={categories.current}
                 styles={colourStyles}
                 onChange={handleChangeCategory}
                 name="category"
@@ -244,7 +256,13 @@ const AddProductForm = () => {
                 name="provinsi"
                 className="form-background"
               >
-                <option defaultValue={"Pilih"}>Pilih Provinsi</option>
+                <option
+                  value={`${city.current?.provinsi.split(",")[0]},${
+                    city.current?.provinsi.split(",")[1]
+                  }`}
+                >
+                  {city.current?.provinsi.split(",")[1]}
+                </option>
                 {province.map((value) => {
                   return (
                     <option
@@ -260,7 +278,13 @@ const AddProductForm = () => {
 
             <div className="mx-5 mb-3">
               <Form.Select className="form-background" name="kota">
-                <option defaultValue={"Pilih"}>Pilih Kota</option>
+                <option
+                  value={`${city.current?.city.split(",")[0]},${
+                    city.current?.city.split(",")[1]
+                  }`}
+                >
+                  {city.current?.city.split(",")[1]}
+                </option>
                 {namaKota.map((value) => {
                   return (
                     <option

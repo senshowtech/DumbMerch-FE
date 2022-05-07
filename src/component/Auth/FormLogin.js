@@ -43,7 +43,7 @@ const FormLogin = () => {
             token: response.data.data.user.token,
           },
         });
-        navigate("/");
+        navigate("/user");
       }
     } catch (error) {
       console.log(error);

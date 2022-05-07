@@ -12,18 +12,19 @@ const EditProductForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
-  const [product, setProduct] = React.useState(null);
-  const [category, setCategory] = React.useState([]);
-  const [categories, setCategories] = React.useState([]);
   const [error, setError] = React.useState("");
   const image = React.useRef(null);
+  const product = React.useRef(null);
+  const category = React.useRef([]);
+  const categories = React.useRef([]);
   const id = state.id;
 
   React.useEffect(() => {
     const getProduct = async () => {
       try {
         const response = await API.get("/product/" + id);
-        setProduct(response.data.data.products);
+        // setProduct(response.data.data.products);
+        product.current = response.data.data.products;
       } catch (error) {
         console.log(error);
       }
@@ -51,7 +52,7 @@ const EditProductForm = () => {
               label: value.name,
             };
           });
-          setCategories(data_categories_baru);
+          categories.current = data_categories_baru;
         }
       } catch (error) {
         console.log(error);
@@ -79,7 +80,7 @@ const EditProductForm = () => {
   };
 
   const handleChangeCategory = (e) => {
-    setCategory(e);
+    category.current = e;
   };
 
   const HandleSubmit = async (e) => {
@@ -91,7 +92,7 @@ const EditProductForm = () => {
         },
       };
       let data_value_category = [];
-      category.forEach((value) => {
+      category.current.forEach((value) => {
         data_value_category.push(value.value);
       });
       let kota = e.target.kota.value.split(",");
@@ -170,7 +171,7 @@ const EditProductForm = () => {
               <div>
                 {preview === null ? (
                   <img
-                    src={product?.image}
+                    src={product.current?.image}
                     style={{
                       maxWidth: "150px",
                       maxHeight: "150px",
@@ -196,7 +197,7 @@ const EditProductForm = () => {
               <Form.Group>
                 <Form.Control
                   type="text"
-                  defaultValue={product?.title}
+                  defaultValue={product.current?.title}
                   name="title"
                   placeholder="Product"
                   className="form-background"
@@ -207,7 +208,7 @@ const EditProductForm = () => {
             <div className="mx-5 mb-3">
               <div className="form-group">
                 <textarea
-                  defaultValue={product?.desc}
+                  defaultValue={product.current?.desc}
                   name="desc"
                   className="form-control form-background"
                   id="exampleFormControlTextarea1"
@@ -220,7 +221,7 @@ const EditProductForm = () => {
             <div className="mx-5 mb-3">
               <Form.Group>
                 <Form.Control
-                  defaultValue={product?.price}
+                  defaultValue={product.current?.price}
                   type="number"
                   name="price"
                   placeholder="Price"
@@ -232,7 +233,7 @@ const EditProductForm = () => {
             <div className="mx-5 mb-3">
               <Form.Group>
                 <Form.Control
-                  defaultValue={product?.qty}
+                  defaultValue={product.current?.qty}
                   type="number"
                   name="qty"
                   placeholder="Quantity"
@@ -243,7 +244,7 @@ const EditProductForm = () => {
 
             <div className="mx-5 mb-3">
               <Select
-                options={categories}
+                options={categories.current}
                 styles={colourStyles}
                 onChange={handleChangeCategory}
                 name="category"
@@ -255,7 +256,7 @@ const EditProductForm = () => {
             <div className="mx-5 mb-3">
               <Form.Group>
                 <Form.Control
-                  defaultValue={product?.kurir[3].weight}
+                  defaultValue={product.current?.kurir[3].weight}
                   type="number"
                   name="weight"
                   placeholder="Berat Barang"
@@ -271,9 +272,9 @@ const EditProductForm = () => {
                 className="form-background"
               >
                 <option
-                  value={`${product?.kurir[4].idprovinsi},${product?.kurir[5].namaprovinsi}`}
+                  value={`${product.current?.kurir[4].idprovinsi},${product.current?.kurir[5].namaprovinsi}`}
                 >
-                  {product?.kurir[5].namaprovinsi}
+                  {product.current?.kurir[5].namaprovinsi}
                 </option>
                 {province.map((value) => {
                   return (
@@ -291,9 +292,9 @@ const EditProductForm = () => {
             <div className="mx-5 mb-3">
               <Form.Select className="form-background" name="kota">
                 <option
-                  value={`${product?.kurir[0].idkota},${product?.kurir[1].namakota}`}
+                  value={`${product.current?.kurir[0].idkota},${product.current?.kurir[1].namakota}`}
                 >
-                  {product?.kurir[1].namakota}
+                  {product.current?.kurir[1].namakota}
                 </option>
                 {namaKota.map((value) => {
                   return (
@@ -310,8 +311,8 @@ const EditProductForm = () => {
 
             <div className="mx-5 mb-3">
               <Form.Select className="form-background" name="kurir">
-                <option value={product?.kurir[2].kurir}>
-                  {product?.kurir[2].kurir.toUpperCase()}
+                <option value={product.current?.kurir[2].kurir}>
+                  {product.current?.kurir[2].kurir.toUpperCase()}
                 </option>
                 <option value="jne">JNE</option>
                 <option value="pos">POS</option>
