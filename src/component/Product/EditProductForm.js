@@ -3,6 +3,7 @@ import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
+import { colourStyles } from "../../data/colourStyles";
 import Select from "react-select";
 
 const EditProductForm = () => {
@@ -140,10 +141,6 @@ const EditProductForm = () => {
         </Alert>
       );
     }
-  };
-
-  const colourStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "#181818" }),
   };
 
   return (

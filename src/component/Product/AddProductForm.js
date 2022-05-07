@@ -3,6 +3,7 @@ import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
 import { Form, Button, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { colourStyles } from "../../data/colourStyles";
 import Select from "react-select";
 
 const AddProductForm = () => {
@@ -127,10 +128,6 @@ const AddProductForm = () => {
         </Alert>
       );
     }
-  };
-
-  const colourStyles = {
-    control: (styles) => ({ ...styles, backgroundColor: "#181818" }),
   };
 
   return (

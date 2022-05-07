@@ -2,6 +2,8 @@ import "../../assets/css/home.css";
 import CardHome from "./CardHome";
 import Paginations from "../Pagination";
 import React from "react";
+import Select from "react-select";
+import { colourStyles } from "../../data/colourStyles";
 import { Form, Pagination } from "react-bootstrap";
 import { API } from "../../config/axios";
 
@@ -50,7 +52,18 @@ const HomePage = () => {
       try {
         const response = await API.get("/categories");
         if (response.status === 201) {
-          setCategories(response.data.data.categories);
+          let data_categories = response.data.data.categories;
+          const data_categories_baru = data_categories.map((value) => {
+            return {
+              value: value.name,
+              label: value.name,
+            };
+          });
+          data_categories_baru.unshift({
+            value: "",
+            label: "Semua Category",
+          });
+          setCategories(data_categories_baru);
         }
       } catch (error) {
         console.log(error);
@@ -95,20 +108,15 @@ const HomePage = () => {
           className="form-search"
         />
         <div style={{ width: "250px" }}>
-          <Form.Select
-            onChange={(e) => setValues(e.target.value)}
-            aria-label="Default select example"
-            className="form-background"
-          >
-            <option value="">Semua Category</option>
-            {categories.map((value) => {
-              return (
-                <option key={value.id} value={value.name}>
-                  {value.name}
-                </option>
-              );
-            })}
-          </Form.Select>
+          <Select
+            defaultValue={{ label: "Semua Category", value: "" }}
+            values={values}
+            options={categories}
+            styles={colourStyles}
+            onChange={(e) => setValues(e.value)}
+            name="category"
+            placeholder="Category"
+          />
         </div>
       </div>
 
