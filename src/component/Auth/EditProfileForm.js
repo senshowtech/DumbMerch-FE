@@ -92,6 +92,9 @@ const EditProfileForm = () => {
       console.log(city);
       console.log(province);
       const formData = new FormData();
+      if (image.current == null) {
+        setError("silahkan isi gambar");
+      }
       formData.set("image", image.current, image.current.name);
       formData.set("phone", e.target.phone.value);
       formData.set("address", e.target.address.value);
@@ -212,7 +215,7 @@ const EditProfileForm = () => {
                   name="address"
                   className="form-control form-background"
                   rows="5"
-                  placeholder="Address"
+                  placeholder="Kelurahan, Kecamatan atau desa"
                 />
               </div>
             </div>

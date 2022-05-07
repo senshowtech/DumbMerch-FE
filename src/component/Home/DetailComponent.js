@@ -139,7 +139,7 @@ const DetailComponent = () => {
             type: "SUCCESS_PAYMENT",
             payload: {
               ...states,
-              statusPayment: "pendings",
+              statusPayment: "pending",
             },
           });
           navigate("/profile");
@@ -164,6 +164,8 @@ const DetailComponent = () => {
     currency: "IDR",
     maximumFractionDigits: 0,
   });
+
+  // console.log(stokCount);
 
   return (
     <div className="container">
