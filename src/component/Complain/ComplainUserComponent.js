@@ -24,6 +24,7 @@ const ComplainUserComponent = () => {
     });
 
     socket.on("new message", () => {
+      // console.log(contact?.id);
       socket.emit("load messages", contact?.id);
     });
 
@@ -37,7 +38,7 @@ const ComplainUserComponent = () => {
     return () => {
       socket.disconnect();
     };
-  }, [messages]);
+  }, [messages, contact]);
 
   const loadContact = () => {
     socket.emit("load admin contact");
@@ -80,8 +81,11 @@ const ComplainUserComponent = () => {
       };
       socket.emit("send messages", data);
       e.target.value = "";
+      loadContact();
     }
   };
+
+  // console.log(contact);
 
   return (
     <div className="container-fluid">
