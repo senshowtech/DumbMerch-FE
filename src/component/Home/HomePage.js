@@ -7,6 +7,7 @@ import { API } from "../../config/axios";
 
 const HomePage = () => {
   const [values, setValues] = React.useState("");
+  const [productsAll, setProductsAll] = React.useState([]);
   const [products, setProducts] = React.useState({
     product: null,
     total_page: null,
@@ -18,7 +19,7 @@ const HomePage = () => {
   const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
-    const getProduct = async () => {
+    const getAllProductPagination = async () => {
       try {
         const response = await API.get("/products/" + page);
         setProducts((prevState) => {
@@ -35,7 +36,16 @@ const HomePage = () => {
         console.log(error);
       }
     };
-    getProduct();
+    getAllProductPagination();
+    const getAllProduct = async () => {
+      try {
+        const response = await API.get("/products/");
+        setProductsAll(response.data.data.products);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllProduct();
     const getCategories = async () => {
       try {
         const response = await API.get("/categories");
@@ -53,7 +63,7 @@ const HomePage = () => {
     setPage(id);
   };
 
-  let data_search = products.product?.filter((value) => {
+  let data_search = productsAll?.filter((value) => {
     if (value.categories.length !== 0) {
       for (let index in value.categories) {
         return (
@@ -90,7 +100,7 @@ const HomePage = () => {
             aria-label="Default select example"
             className="form-background"
           >
-            <option value="">Pilih Category</option>
+            <option value="">Semua Category</option>
             {categories.map((value) => {
               return (
                 <option key={value.id} value={value.name}>
@@ -112,6 +122,20 @@ const HomePage = () => {
               Data Not Found
             </h5>
           </div>
+        ) : data_search?.length !== 0 && values === "" ? (
+          products.product.map((value) => {
+            return (
+              <CardHome
+                key={value.id}
+                id={value.id}
+                nama={value.title}
+                harga={value.price}
+                stok={value.qty}
+                gambar={value.image}
+                categories={value.categories}
+              />
+            );
+          })
         ) : (
           data_search?.map((value) => {
             return (

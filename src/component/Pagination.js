@@ -26,7 +26,6 @@ const Paginations = ({ products, Pagination, ChangePage, page }) => {
   return (
     <div className="d-flex justify-content-center">
       <Pagination>
-        <Pagination.First />
         {items.map((value) => {
           return (
             <Pagination.Item
@@ -38,7 +37,6 @@ const Paginations = ({ products, Pagination, ChangePage, page }) => {
             </Pagination.Item>
           );
         })}
-        <Pagination.Last />
       </Pagination>
     </div>
   );
