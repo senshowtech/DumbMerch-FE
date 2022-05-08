@@ -4,6 +4,7 @@ import { UserContext } from "../../context/userContext";
 import Contact from "./Contact";
 import Chat from "./Chat";
 import { io } from "socket.io-client";
+import { API } from "../../config/axios";
 
 let socket;
 
@@ -12,8 +13,19 @@ const ComplainUserComponent = () => {
   const [contacts, setContacts] = React.useState([]);
   const [messages, setMessages] = React.useState([]);
   const [state, dispatch] = React.useContext(UserContext);
+  const imageDefault = React.useRef(null);
 
   React.useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await API.get("/users/");
+        imageDefault.current = response.data.data.users.profiles.image;
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+
     socket = io("http://localhost:5000", {
       auth: {
         token: localStorage.getItem("token"),
@@ -25,7 +37,6 @@ const ComplainUserComponent = () => {
 
     socket.on("new message", (data) => {
       if (contact?.id === undefined) {
-        console.log("cek");
         socket.emit("load messages", data);
       } else {
         socket.emit("load messages", contact.id);
@@ -88,8 +99,6 @@ const ComplainUserComponent = () => {
     }
   };
 
-  // console.log(contact);
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -103,6 +112,7 @@ const ComplainUserComponent = () => {
 
         <div className="col-12 col-lg-9 complain-admin-kanan">
           <Chat
+            imageDefault={imageDefault.current}
             contact={contact}
             messages={messages}
             user={state.user.user}

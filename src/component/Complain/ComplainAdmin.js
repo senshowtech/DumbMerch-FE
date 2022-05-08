@@ -11,6 +11,7 @@ const ComplainAdmin = () => {
   const [contacts, setContacts] = React.useState([]);
   const [messages, setMessages] = React.useState([]);
   const [state, dispatch] = React.useContext(UserContext);
+  const imageDefault = React.useRef(null);
 
   React.useEffect(() => {
     socket = io("http://localhost:5000", {
@@ -40,6 +41,11 @@ const ComplainAdmin = () => {
 
   const loadContacts = () => {
     socket.emit("load custommer contacts");
+    socket.emit("load admin contact");
+
+    socket.on("admin contact", (data) => {
+      imageDefault.current = data.profiles.image;
+    });
 
     socket.on("custommer contacts", (data) => {
       let dataContacts = data.filter(
@@ -49,10 +55,7 @@ const ComplainAdmin = () => {
       );
       dataContacts = dataContacts.map((item) => ({
         ...item,
-        message:
-          messages.length > 0
-            ? messages[messages.length - 1].message
-            : "Click here to start message",
+        message: "Click here to start message",
       }));
       setContacts(dataContacts);
     });
@@ -102,6 +105,7 @@ const ComplainAdmin = () => {
 
         <div className="col-12 col-lg-9 complain-admin-kanan">
           <Chat
+            imageDefault={imageDefault.current}
             contact={contact}
             messages={messages}
             user={state.user.user}

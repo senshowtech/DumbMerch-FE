@@ -1,6 +1,13 @@
 import React from "react";
 
-const Chat = ({ setContact, contact, user, messages, sendMessage }) => {
+const Chat = ({
+  setContact,
+  contact,
+  user,
+  messages,
+  sendMessage,
+  imageDefault,
+}) => {
   return (
     <div>
       {contact === null ? (
@@ -24,13 +31,39 @@ const Chat = ({ setContact, contact, user, messages, sendMessage }) => {
                     : "justify-content-start"
                 }`}
               >
-                <div
-                  className={
-                    item.idSender === user.id ? "chat-me" : "chat-other"
-                  }
-                >
-                  {item.message}
-                </div>
+                {item.idSender !== user.id && (
+                  <div className="d-flex">
+                    <img
+                      src={contact?.profiles.image}
+                      className="rounded-circle me-2 img-chat"
+                      alt="bubble avatar"
+                    />
+                    <div
+                      className={
+                        item.idSender === user.id ? "chat-me" : "chat-other"
+                      }
+                    >
+                      {item.message}
+                    </div>
+                  </div>
+                )}
+                {item.idSender === user.id && (
+                  <div className="d-flex">
+                    <div
+                      className={
+                        item.idSender === user.id ? "chat-me" : "chat-other"
+                      }
+                    >
+                      {item.message}
+                    </div>
+                    <img
+                      style={{ marginLeft: "20px" }}
+                      src={imageDefault}
+                      className="rounded-circle me-2 img-chat"
+                      alt="bubble avatar"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))}

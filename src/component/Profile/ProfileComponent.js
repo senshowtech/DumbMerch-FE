@@ -34,6 +34,29 @@ const ProfileComponent = () => {
     maximumFractionDigits: 0,
   });
 
+  const Time = (date) => {
+    let newdate = new Date(date);
+    let nama_hari = newdate.toLocaleString("en-us", { weekday: "long" });
+    let tanggal = newdate.getDate();
+    let tahun = newdate.getFullYear();
+    let bulan = newdate.getMonth();
+    let nama_bulan = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+    return `${nama_hari}, ${tanggal} ${nama_bulan[bulan]} ${tahun}`;
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -79,9 +102,7 @@ const ProfileComponent = () => {
                   <h6 className="judul-samping-profile">
                     {value.product.title}
                   </h6>
-                  <p className="judul-samping-profile">
-                    Saturday, 14 Juli 2021
-                  </p>
+                  <p className="judul-samping-profile">{Time(value.date)}</p>
                   <p className="paragrapgh-samping-profile">
                     {formatter.format(value.price)}
                   </p>
