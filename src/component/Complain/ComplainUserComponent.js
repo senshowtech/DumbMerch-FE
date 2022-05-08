@@ -23,9 +23,13 @@ const ComplainUserComponent = () => {
       },
     });
 
-    socket.on("new message", () => {
-      // console.log(contact?.id);
-      socket.emit("load messages", contact?.id);
+    socket.on("new message", (data) => {
+      if (contact?.id === undefined) {
+        console.log("cek");
+        socket.emit("load messages", data);
+      } else {
+        socket.emit("load messages", contact.id);
+      }
     });
 
     loadContact();
@@ -38,7 +42,7 @@ const ComplainUserComponent = () => {
     return () => {
       socket.disconnect();
     };
-  }, [messages, contact]);
+  }, [messages]); //  di isi contact agar setiap klik menjalankan useEffect
 
   const loadContact = () => {
     socket.emit("load admin contact");
@@ -81,7 +85,6 @@ const ComplainUserComponent = () => {
       };
       socket.emit("send messages", data);
       e.target.value = "";
-      loadContact();
     }
   };
 
