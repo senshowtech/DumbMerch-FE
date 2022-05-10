@@ -26,7 +26,7 @@ const ComplainUserComponent = () => {
     };
     getUser();
 
-    socket = io("http://localhost:5000", {
+    socket = io("https://www.api.diafragma.xyz", {
       auth: {
         token: localStorage.getItem("token"),
       },
