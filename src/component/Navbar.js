@@ -13,7 +13,7 @@ const Navbars = () => {
 
   let url = window.location.href;
   let host = window.location.host;
-  let final_url = url.replace(`http://${host}`, "");
+  let final_url = url.replace(`https://${host}`, "");
 
   const Logout = () => {
     dispatch({
