@@ -4,16 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/userContext";
 
-const Navbars = () => {
+const Navbars = ({ final_url }) => {
   const [state, dispatch] = useContext(UserContext);
   const navigate = useNavigate();
 
   let Getdatalogin = localStorage.getItem("isAdmin");
   let isAdmin = JSON.parse(Getdatalogin);
-
-  let url = window.location.href;
-  let host = window.location.host;
-  let final_url = url.replace(`https://${host}`, "");
 
   const Logout = () => {
     dispatch({
@@ -42,6 +38,7 @@ const Navbars = () => {
             />
           </Navbar.Brand>
         )}
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse
           id="responsive-navbar-nav"

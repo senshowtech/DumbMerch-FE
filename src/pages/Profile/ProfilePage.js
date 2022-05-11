@@ -3,7 +3,7 @@ import ProfileComponent from "../../component/Profile/ProfileComponent";
 const ProfilePage = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars final_url="/profile" />
       <ProfileComponent />
     </div>
   );

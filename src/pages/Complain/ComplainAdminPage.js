@@ -3,7 +3,7 @@ import Navbars from "../../component/Navbar";
 const ComplainAdminPage = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars final_url="/complain-admin" />
       <ComplainAdmin />
     </div>
   );

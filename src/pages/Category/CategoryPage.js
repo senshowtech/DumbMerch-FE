@@ -4,7 +4,7 @@ import Navbars from "../../component/Navbar";
 const CategoryPage = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars final_url="/category" />
       <Category />
     </div>
   );

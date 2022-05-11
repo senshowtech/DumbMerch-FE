@@ -3,7 +3,7 @@ import ComplainUserComponent from "../../component/Complain/ComplainUserComponen
 const ComplainUserPage = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars final_url="/complain" />
       <ComplainUserComponent />
     </div>
   );

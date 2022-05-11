@@ -4,7 +4,7 @@ import Navbars from "../../component/Navbar";
 const ProductPage = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars final_url="/product" />
       <Product />
     </div>
   );

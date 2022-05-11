@@ -4,7 +4,7 @@ import HomePage from "../../component/Home/HomePage";
 const HomeUser = () => {
   return (
     <div>
-      <Navbars />
+      <Navbars final_url="/user" />
       <HomePage />
     </div>
   );
