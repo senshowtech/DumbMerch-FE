@@ -26,7 +26,7 @@ const ComplainUserComponent = () => {
     };
     getUser();
 
-    socket = io("https://www.api.diafragma.xyz", {
+    socket = io("https://api.diafragma.xyz", {
       auth: {
         token: localStorage.getItem("token"),
       },
@@ -79,7 +79,7 @@ const ComplainUserComponent = () => {
         setMessages(dataMessages);
       }
       const chatMessages = document.getElementById("chat-messages");
-      chatMessages.scrollTop = chatMessages?.scrollHeight;
+      // chatMessages.scrollTop = chatMessages?.scrollHeight;
     });
   };
 

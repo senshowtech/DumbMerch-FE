@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Create base URL API
 export const API = axios.create({
-  baseURL: "https://www.api.diafragma.xyz/api/v1/",
+  baseURL: "https://api.diafragma.xyz/api/v1/",
 });
 
 // Set Authorization Token Header
