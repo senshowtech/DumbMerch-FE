@@ -1,5 +1,4 @@
-@media (min-width: 376px) and (max-width: 991px) {
-
+@media (min-width: 306px) and (max-width: 991px) {
     .box-kiri {
         margin-top: 140px;
     }
@@ -31,7 +30,7 @@
 
     .login-box {
         height: 366px;
-        width: 416px;
+        width: 366px;
         background-color: #181818;
     }
 
@@ -45,7 +44,7 @@
     }
 
     .login-buttons {
-        width: 335px !important;
+        width: 105px !important;
         background-color: #F74D4D !important;
         border: 1px solid #F74D4D !important;
         color: white !important
