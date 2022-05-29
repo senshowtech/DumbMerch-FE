@@ -35,16 +35,19 @@ const FormRegister = () => {
   const RenderAlert = () => {
     if (errorMessage !== "") {
       return (
-        <Alert
-          variant="danger"
-          style={{
-            width: "416px",
-            textAlign: "center",
-            marginTop: "30px",
-          }}
-        >
-          {errorMessage.message}
-        </Alert>
+        <div className="d-flex justify-content-center">
+          <Alert
+            variant="danger"
+            style={{
+              width: "300px",
+              height: 50,
+              textAlign: "center",
+              marginTop: "10px",
+            }}
+          >
+            {errorMessage.message}
+          </Alert>
+        </div>
       );
     }
   };
@@ -127,49 +130,51 @@ const FormRegister = () => {
 
         <div className="col-12 col-lg">
           <div className="box-kanan">
-            {RenderAlert()}
             <div className="d-flex align-items-center login-box">
-              <Form onSubmit={HandleSubmit}>
+              <div className="d-flex flex-column">
+                {RenderAlert()}
                 <h3 className="judul-login-form mx-5">Register</h3>
-                <div className="mx-5">
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="text"
-                      name="name"
-                      placeholder="Name"
-                      className="form-background"
-                    />
-                  </Form.Group>
-                </div>
+                <Form onSubmit={HandleSubmit}>
+                  <div className="mx-5">
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        className="form-background"
+                      />
+                    </Form.Group>
+                  </div>
 
-                <div className="mx-5">
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      placeholder="Enter email"
-                      className="form-background"
-                    />
-                  </Form.Group>
-                </div>
+                  <div className="mx-5">
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="email"
+                        name="email"
+                        placeholder="Enter email"
+                        className="form-background"
+                      />
+                    </Form.Group>
+                  </div>
 
-                <div className="mx-5">
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      className="form-background"
-                    />
-                  </Form.Group>
-                </div>
+                  <div className="mx-5">
+                    <Form.Group className="mb-3">
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        className="form-background"
+                      />
+                    </Form.Group>
+                  </div>
 
-                <div className="mx-5">
-                  <Button type="submit" className="login-buttons">
-                    Submit
-                  </Button>
-                </div>
-              </Form>
+                  <div className="mx-5">
+                    <Button type="submit" className="login-buttons">
+                      Submit
+                    </Button>
+                  </div>
+                </Form>
+              </div>
             </div>
           </div>
         </div>

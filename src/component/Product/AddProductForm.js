@@ -154,6 +154,7 @@ const AddProductForm = () => {
               <input
                 type="file"
                 name="image"
+                accept="image/*"
                 style={{ display: "none" }}
                 id="contained-button-file"
                 onChange={handleChangeImage}

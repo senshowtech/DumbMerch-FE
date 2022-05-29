@@ -154,6 +154,7 @@ const EditProductForm = () => {
             <h3 className="judul-login-form mx-5">Add Product</h3>
             <div className="mx-5">
               <input
+                accept="image/*"
                 type="file"
                 name="image"
                 style={{ display: "none" }}

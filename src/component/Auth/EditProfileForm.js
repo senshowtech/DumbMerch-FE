@@ -128,6 +128,7 @@ const EditProfileForm = () => {
               </h5>
               <input
                 type="file"
+                accept="image/*"
                 name="image"
                 style={{ display: "none" }}
                 id="contained-button-file"
