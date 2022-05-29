@@ -26,7 +26,7 @@ const ComplainUserComponent = () => {
     };
     getUser();
 
-    socket = io("https://api.diafragma.xyz", {
+    socket = io("https://dumbmerchapi.herokuapp.com", {
       auth: {
         token: localStorage.getItem("token"),
       },

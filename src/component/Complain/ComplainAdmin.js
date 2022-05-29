@@ -14,7 +14,7 @@ const ComplainAdmin = () => {
   const imageDefault = React.useRef(null);
 
   React.useEffect(() => {
-    socket = io("https://api.diafragma.xyz", {
+    socket = io("https://dumbmerchapi.herokuapp.com", {
       auth: {
         token: localStorage.getItem("token"),
       },
