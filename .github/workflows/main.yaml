@@ -1,0 +1,17 @@
+name: scp files
+on: [push]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.IP }}
+          username: dumbmerch
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          source: "build"
+          target: "/home/dumbmerch"
