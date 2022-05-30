@@ -44,6 +44,10 @@ a.nav-link:hover {
     height: 35px;
 }
 
+.modal-content {
+    background-color: transparent;
+}
+
 .pagination>li>a {
     background-color: black;
     color: whitesmoke;
