@@ -1,7 +1,7 @@
 import React from "react";
 import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { colourStyles } from "../../data/colourStyles";
 import Select from "react-select";
@@ -10,6 +10,7 @@ const AddProductForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const image = React.useRef(null);
   const city = React.useRef(null);
@@ -80,7 +81,25 @@ const AddProductForm = () => {
     category.current = e;
   };
 
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div className="d-flex justify-content-center modalbackground">
+          <Spinner variant="light" animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      </Modal>
+    );
+  }
+
   const HandleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const config = {
@@ -147,6 +166,7 @@ const AddProductForm = () => {
       <div className="row">
         <div className="col-1"></div>
         <div className="col-10">
+          <MyVerticallyCenteredModal show={loading} />
           <Form onSubmit={HandleSubmit}>
             <div className="d-flex justify-content-center">{RenderAlert()}</div>
             <h3 className="judul-login-form mx-5">Add Product</h3>

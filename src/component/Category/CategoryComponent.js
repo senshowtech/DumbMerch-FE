@@ -107,18 +107,20 @@ const Category = () => {
           </tbody>
         </Table>
         <Modal show={show} onHide={handleClose}>
-          <Modal.Body>
-            <h3>Delete Data</h3>
-            <p>Are you sure you want to delete this data?</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="success" onClick={() => Delete()}>
-              Ya
-            </Button>
-            <Button variant="danger" onClick={handleClose}>
-              Tidak
-            </Button>
-          </Modal.Footer>
+          <div style={{ backgroundColor: "white" }}>
+            <Modal.Body>
+              <h3>Delete Data</h3>
+              <p>Are you sure you want to delete this data?</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="success" onClick={() => Delete()}>
+                Ya
+              </Button>
+              <Button variant="danger" onClick={handleClose}>
+                Tidak
+              </Button>
+            </Modal.Footer>
+          </div>
         </Modal>
       </div>
     </div>

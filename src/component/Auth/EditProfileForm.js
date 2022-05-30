@@ -1,13 +1,14 @@
 import React from "react";
 import "../../assets/css/edit.css";
 import { API } from "../../config/axios";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Modal, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const EditProfileForm = () => {
   const [province, setProvince] = React.useState([]);
   const [namaKota, setnamaKota] = React.useState([]);
   const [preview, setPreview] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
   const [city, setCity] = React.useState({
     city: null,
     provinsi: null,
@@ -81,7 +82,25 @@ const EditProfileForm = () => {
     }
   };
 
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div className="d-flex justify-content-center modalbackground">
+          <Spinner variant="light" animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      </Modal>
+    );
+  }
+
   const HandleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     try {
       const config = {
@@ -89,8 +108,6 @@ const EditProfileForm = () => {
           "Content-type": "multipart/form-data",
         },
       };
-      console.log(city);
-      console.log(province);
       const formData = new FormData();
       if (image.current == null) {
         setError("silahkan isi gambar");
@@ -101,6 +118,7 @@ const EditProfileForm = () => {
       formData.set("city", JSON.stringify(city));
       const response = await API.patch("/profile", formData, config);
       if (response.status === 201) {
+        setLoading(false);
         const response_user = await API.get("/users");
         let status = response_user.data.data.users.status;
         if (status === "user") {
@@ -119,6 +137,7 @@ const EditProfileForm = () => {
       <div className="row">
         <div className="col-1"></div>
         <div className="col-10">
+          <MyVerticallyCenteredModal show={loading} />
           <Form onSubmit={HandleSubmit}>
             <div className="d-flex justify-content-center">{RenderAlert()}</div>
             <h3 className="judul-login-form mx-5">Profile</h3>
