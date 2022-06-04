@@ -4,7 +4,7 @@ import Paginations from "../Pagination";
 import React from "react";
 import Select from "react-select";
 import { colourStyles } from "../../data/colourStyles";
-import { Form, Pagination } from "react-bootstrap";
+import { Form, Pagination, Modal, Spinner } from "react-bootstrap";
 import { API } from "../../config/axios";
 
 const HomePage = () => {
@@ -19,6 +19,7 @@ const HomePage = () => {
   });
   const [categories, setCategories] = React.useState([]);
   const [page, setPage] = React.useState(1);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const getAllProductPagination = async () => {
@@ -42,7 +43,10 @@ const HomePage = () => {
     const getAllProduct = async () => {
       try {
         const response = await API.get("/products/");
-        setProductsAll(response.data.data.products);
+        if (response.status === 201) {
+          setLoading(false);
+          setProductsAll(response.data.data.products);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -72,6 +76,23 @@ const HomePage = () => {
     getCategories();
   }, [page]);
 
+  function MyVerticallyCenteredModal(props) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div className="d-flex justify-content-center modalbackground">
+          <Spinner variant="light" animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      </Modal>
+    );
+  }
+
   const ChangePage = (id) => {
     setPage(id);
   };
@@ -98,6 +119,7 @@ const HomePage = () => {
   return (
     <div className="container">
       <h5 className="judul-produk">Product</h5>
+      <MyVerticallyCenteredModal show={loading} />
 
       <div className="d-flex justify-content-between">
         <Form.Control
